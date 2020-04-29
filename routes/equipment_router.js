@@ -102,7 +102,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?", function (req, res, next) {
                                     });
                                 }
                                 else{
-                                    equipment.updateOne({ student_id: req.params.studentID, equipment_id: req.params.equipmentID },{$inc:{quantity:-req.body.quantity}},function(err,rows){
+                                    equipment.updateOne({ student_id: req.params.studentID, equipment_id: req.params.equipmentID },{$inc:{quantity:-req.params.quantity}},function(err,rows){
                                         if(err)
                                         {
                                             res.json(err);
@@ -172,7 +172,8 @@ router.post('/', function (req, res, next) {
                 });
                 console.log(equi);
                 equi.save(function (err, result) {
-                    if (err) {
+                    if (err) 
+                    {
                         res.json(err);
                     }
                     else {
