@@ -1,0 +1,282 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/homepageSAC.css"></link>
+        <script type="text/javascript" src="/javascripts/homepageSAC.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type="text/javascript">
+    function f3()
+    {
+      const equipmentid=document.getElementById('sel1').value;
+           
+            const qty=document.getElementById('qty1').value;
+            console.log(equipmentid);
+            console.log(qty);
+          let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            scanner.addListener('scan', function (content) {
+              alert(content);
+                var decryptedID='';
+              $.ajax({
+                  type: 'get',
+                  url: '/decryptID/'+content,
+                  
+                  
+
+                  success: function(data){
+                    decryptedID = data;
+                    alert(decryptedID);
+                    console.log(data);
+                    let s1=Number(decryptedID);
+              console.log("vidhu"+s1);
+              if(isNaN(s1))
+              {
+               //document.write("not valid");
+               document.getElementById('error-ID').innerHTML="*ID is Invalid";
+              }
+             else
+             {
+               let batch_year=Math.trunc(s1/100000);
+               let batch_id=Math.trunc(s1/1000)%100;
+               let stu_id=Math.trunc(s1%1000);
+               alert(batch_year);
+               alert(batch_id);
+               alert(stu_id);
+              
+              var x=Date.now();
+              var dat_obj=new Date(x);
+              var year=dat_obj.getFullYear();
+              alert("final"+year);
+             if(batch_id==01)
+             {
+               if(batch_year<=year && batch_year>=year-4)
+               {
+                window.location.href="/equipment/"+equipmentid+"/"+decryptedID+"/"+qty;
+              
+                  
+                  
+
+                  
+               }
+               else{
+                 //document.write("invalid");
+                 document.getElementById('error-ID').innerHTML="*ID is Invalid";
+               }
+             }
+             else if(batch_id==11 || batch_id==12)
+             {
+                if(batch_year<=year && batch_year>=year-2)
+                {
+                  window.location.href="/equipment/"+equipmentid+"/"+decryptedID+"/"+qty;
+                }
+                else
+                {
+                  //document.write("invalid");
+                  document.getElementById('error-ID').innerHTML="*ID is Invalid";
+                }
+             }
+             else{
+               //document.write("invalid");
+               document.getElementById('error-ID').innerHTML="*ID is Invalid";
+             } 
+
+             }
+                  },
+                  error: function(jqXHR, textStatus, err)
+                  {
+                    console.log(data);
+                      console.log(textStatus +  " " + err);
+                  }
+                
+              });
+             
+              //setTimeout(null,1000);
+              console.log(decryptedID);
+            });
+             
+            Instascan.Camera.getCameras().then(function (cameras) {
+              if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+              } else {
+                console.error('No cameras found.');
+              }
+            }).catch(function (e) {
+              console.error(e);
+            });
+    }
+        function f1(){
+          if(document.getElementById('r1').checked)
+            {
+              if(confirm("Are you sure you want to return?"))
+              {
+               f3(); 
+              }
+              else{
+                console.log("no");
+
+              }
+            }
+            else{
+              f3();
+            }
+         
+        }
+        function submitfun(){
+          
+            const equipmentid=document.getElementById('sel1').value;
+            const studentid=document.getElementById('sid').value;
+            const qty=document.getElementById('qty1').value;
+            if(document.getElementById('r1').checked)
+            {
+              if(confirm("Are you sure you want to return?"))
+              {
+                console.log("yes");
+                window.location.href="/equipment/"+equipmentid+"/"+studentid+"/"+qty;
+              }
+              else{
+                console.log("no");
+
+              }
+            }
+            else{
+              window.location.href="/equipment/"+equipmentid+"/"+studentid+"/"+qty;
+            }
+            console.log(equipmentid,qty,studentid);
+        }
+        let available_item=0;
+        let equ_id="";
+        function v1()
+        {
+   
+         
+          var x=document.getElementById('sel1');
+          var y=x.options[x.selectedIndex].getAttribute('data-avl');
+          console.log(y);
+          console.log(x);
+          available_item=Number(y);
+          }
+
+        
+       
+        function v2()
+        {
+         
+          if(!document.getElementById("r1").checked)
+          {
+
+
+          var y=document.getElementById('qty1').value;
+          var z=Number(y);
+          console.log(y);
+          console.log(available_item);
+        
+          if(z>available_item)
+          {
+            document.getElementById('error-qty').innerHTML="Available Item : "+available_item;
+            document.getElementById('qty1').focus();
+            document.getElementById('sub1').disabled=true;
+            document.getElementById('scan').disabled=true;
+          }
+          else{
+            document.getElementById('error-qty').innerHTML="";
+            document.getElementById('sub1').disabled=false;
+            document.getElementById('scan').disabled=false;
+          }
+        }
+        else{
+          document.getElementById('sub1').disabled=false;
+            document.getElementById('scan').disabled=false;
+        }
+        }
+
+    </script>
+    </head>
+    <body>
+        
+        
+    <nav class="n1">
+        <div>
+    <header><img src="/images/DAIICT.jpg" class="img1" /></header>
+    </div>
+     <div class="menu1">
+                        <div class="menualign1"><a href="homepageSAC.html" class="selected">Home</a>
+                        <a href="inventory.html" >Inventory</a>
+                        <a href="profile/">Profile</a>
+                        <a href="Reports/">Reports</a>
+                          <a href="ChangePassword.html">Change Password</a>
+                        <a href="login.html">Logout</a>
+                        </div>
+                    </div>
+      </nav>  
+    <div class="d1">
+  
+    <form align="center"  name="sacForm" id="sacForm">
+        <br/>
+        <h2 class="h11">SAC HOMEPAGE</h2>
+        <table align="center">
+        <tr>
+        <td>
+          <input type="radio" name="r1" id="r1" value="return" checked >return
+          </td>
+          <td>
+          <input type="radio" name="r1" id="r2" value="issue">issue
+        </td>
+        </tr>
+        <tr>
+          
+            <td><label class="sel1">Type of equipment: </label></td>
+            
+            <td><select required id="sel1" class="sel" name="equipmentID" onchange="v1()">
+              
+                <option value="">Select equipment</option>
+                <% data.stock.forEach(equipment=>{%>
+    
+                        <option data-avl="<%= equipment.NumberOfAvailable %>" value="<%= equipment._id %>"><%= equipment.name %></option>
+                        
+                   
+                <% }) %>
+                </select>
+              
+                
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td><label class="qty">Quantity: </label></td>
+            <td><input type="number" class="qty1" id="qty1"  value=1 onkeyup="validateForm();v2();" required name="quantity"></td>
+            
+        </tr>
+        <tr>
+            <td></td>
+            <td><span id="error-qty" style="color: red" ></span></td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td><label class="sid1">Student ID:</label></td>
+            <td><input type="text" name="studentID" class="sid" id="sid" onkeyup="username()"  onkeypress="return isNumberKey(event)" required></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><span id="error-ID" style="color: red"></span></td>
+        </tr>
+
+        <tr></tr>
+        <tr align="center">
+            <td colspan="2"><button value="scanqr" name="scanqr" class="btn1" id="scan" onclick="f1()">Scan QR</button>
+            <br><video id="preview"></video>
+            </td >
+        </tr>
+        <tr></tr>
+        <tr align="center">
+
+        <td><button type="button" id="sub1" class="btn3" onclick="submitfun()">Submit</button></td>
+        <td><button type="reset" class="btn4">Clear</button></td>
+    </tr>
+    </table>
+    <br/>
+    <br/>
+    </form>
+    </div>
+    </body>
+    </html>

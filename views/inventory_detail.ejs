@@ -1,0 +1,195 @@
+<!-- <html>
+    <head><title> Inventory Detail </title>
+    
+        <style>
+        table{
+            text-align: center;
+            padding: 5px;
+        }
+        td{
+            padding: 10px;
+        }
+        </style>
+    </head>
+    
+    <body>
+        <h1>Inventory Details</h1>
+        <table border="2px">
+            <th>Name</th>
+            <th>Number Of Available</th>
+            <th>Number Of Issued</th>
+            <% data.stock.forEach(result=>{ %>
+            <tr>
+                    <td> <%= result.name %> </td> 
+                    <td> <%= result.NumberOfAvailable %> </td> 
+                    <td> <%= result.NumberOfItems - result.NumberOfAvailable %> </td> 
+            </tr>
+            <% }) %>
+        </table>
+    </body>
+</html> -->
+
+<!-- <html>
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/inventory.css"></link>
+    
+</head>
+<body>
+<div>
+<nav>
+	<div>
+<header><img src="/images/DAIICT.jpg" class="img2"/></header>
+</div>
+ <div class="menu">
+                    <div class="menualign"><a href="homepageSAC.html" >Home</a>
+                    <a href="inventory.html" class="selected">Inventory</a>
+                    <a href="profile/">Profile</a>
+                    <a href="Reports/">Reports</a>
+                   	<a href="ChangePassword.html">Change Password</a>
+                    <a href="contact">Logout</a>
+                    </div>
+                </div>
+  </nav>          
+<div class="d2">
+<form align="center" method="POST" action="#">
+	<br/>
+	<h2 class="h12">Inventory</h2>
+	<table align="center">
+	<tr>
+<td><label class="toe">Type of equipment: </label></td>
+<td><select class="sel1" required id="toe">
+	<option value="">Select equipment</option>
+	<option value="shuttlecock">Shuttlecock</option>
+	<option value="Football">Football</option>
+	<option value="Volleyball">Volleyball</option>
+	<option value="Basketball">Basketball</option>
+	<option value="Cricketball">Cricket-Ball</option>
+</select></td>
+</tr>
+<tr></tr>
+<tr>
+	<td><label class="qty2">Quantity: </label></td>
+    <td><input type="number" class="qty3"  onfocusout="validateForm()" onfocus="validatefun()" required>
+        <script type="text/javascript" src="/javascripts/inventory.js"></script>
+    </td>
+		<td><span id="error-qty" style="color: red" ></span></td>
+	
+</tr>
+<tr></tr>
+<tr></tr>
+<tr align="center">
+	<td>
+	<button type="Submit" class="btn1" >Submit</button>
+	</td>
+	<td>
+		<button type="reset" class="btn2">Clear</button>
+	</td>
+</tr>
+</table>
+<br/>
+<br/>
+</form>
+</div>
+</body>
+</html> -->
+
+<html>
+
+        <head>
+            <link rel="stylesheet" type="text/css" href="/stylesheets/homepageSAC.css"></link>
+            <script type="text/javascript" src="/javascripts/inventory.js"></script>
+        </head>
+        <body>
+        <nav class="n1">
+            <div>
+        <header><img src="/images/DAIICT.jpg" class="img1" /></header>
+        </div>
+         <div class="menu1">
+                            <div class="menualign1"><a href="homepageSAC.html" class="selected">Home</a>
+                            <a href="inventory.html" >Inventory</a>
+                            <a href="profile/">Profile</a>
+                            <a href="Reports/">Reports</a>
+                              <a href="ChangePassword.html">Change Password</a>
+                            <a href="login.html">Logout</a>
+                            </div>
+                        </div>
+          </nav>  
+          <br>
+          <div class="chooseBtn">
+            <h2 class="title">Inventory Management</h2>
+          </div>
+          <div class="chooseBtn">
+            <button class="updatebtn" onclick="AddNewRecord()">Add New Record</button>
+            <button class="updatebtn" onclick="UpdateNewStock()">Update New Stock</button>
+        </div>
+    <div class="d1" id="addnewrecord">    
+        <form align="center" method="POST" action="/inventory/">
+            <br/>
+            <h2 class="h11">Add New Sports Equipment</h2>
+            <table align="center">
+            <tr>
+                <td><label class="sel1">Type of equipment: </label></td>
+                <td>
+                    <input type="text" class="sel" name="itemName" id="itemName">
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td><label class="qty">Quantity: </label></td>
+                <td><input type="number" class="qty1" id="qty1" onkeyup="validateForm()" required name="totalQuantity"></td>
+            </tr>
+                <tr> <td></td> <td><span id="error-qty" style="color: red" ></span></td></tr>
+            <tr></tr>
+            <tr>
+                    <td><label class="qty">Number Of Available: </label></td>
+                    <td><input type="number" class="qty1" readonly id="availableQty" name="availableQuantity"></td>
+                </tr>
+                <tr></tr>
+            <tr align="center">
+            <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
+            <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
+        </tr>
+        </table>
+        <br/>
+        <br/>
+        </form>
+        </div>
+        <div class="d1" id="UpdateNewStock">
+                <form align="center" method="POST" action="/inventory/updatestock">
+                    <br/>
+                    <h2 class="h11">Update Sports Equipment Stock</h2>
+                    <table align="center">
+                    <tr>
+                        <td><label class="sel1">Type of equipment: </label></td>
+                        <td>
+                                <select required id="sel1" class="sel" name="equipmentID">
+                                        <option value="">Select equipment</option>
+                                        <% data.stock.forEach(result=>{ %>
+                                            <option value="<%= result._id %>"><%= result.name %></option>
+                                        <% }) %>
+                                        </select>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                            <td><label class="qty">Quantity: </label>
+                                <br>
+                                <span style="color: red; font-size: 15px;" >(quantity will be added in current quantity)</span>
+                            </td>
+                            <td><input type="number" class="qty1" id="qty1" required name="quantity"></td>
+                        </tr>
+                    <tr></tr>
+                    <tr align="center">
+                    <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
+                    <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
+                </tr>
+                </table>
+                <br/>
+                <br/>
+                </form>
+            </div>
+        </body>
+        </html>
+       

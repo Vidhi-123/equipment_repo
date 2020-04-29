@@ -1,0 +1,151 @@
+<!-- <html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/homepageSAC.css"></link>
+        <script type="text/javascript" src="/javascripts/homepageSAC.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type="text/javascript">
+        function f1(){
+            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            scanner.addListener('scan', function (content) {
+              //alert(content);
+              let s1=Number(content);
+              console.log("vidhu"+s1);
+              if(isNaN(s1))
+              {
+               document.write("not valid");
+              }
+             else
+             {
+               let batch_year=Math.trunc(s1/100000);
+               let batch_id=Math.trunc(s1/1000)%100;
+               let stu_id=Math.trunc(s1%1000);
+               alert(batch_year);
+               alert(batch_id);
+               alert(stu_id);
+              var equ_id=document.getElementById('sel1').value;
+              var x=Date.now();
+              var dat_obj=new Date(x);
+              var year=dat_obj.getFullYear();
+              alert("final"+year);
+             if(batch_id==01)
+             {
+               if(batch_year<=year && batch_year>=year-4)
+               {
+              
+                if(equ_id!=null && equ_id!=undefined)
+                {
+                    window.location.href="/equipment/"+content+'/'+equ_id;
+                }
+                else{
+                    alert('please enter equipment id');
+                }
+               }
+               else{
+                 document.write("invalid");
+               }
+             }
+             else if(batch_id==11 || batch_id==12)
+             {
+                if(batch_year<=year && batch_year>=year-2)
+                {
+                    if(equ_id!=null && equ_id!=undefined)
+                {
+                    window.location.href="/equipment/"+content+'/'+equ_id;
+                }
+                else{
+                    alert('please enter equipment id');
+                }
+                }
+                else
+                {
+                  document.write("invalid");
+                }
+             }
+             else{
+               document.write("invalid");
+             } 
+
+             }
+            });
+            Instascan.Camera.getCameras().then(function (cameras) {
+              if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+              } else {
+                console.error('No cameras found.');
+              }
+            }).catch(function (e) {
+              console.error(e);
+            });
+        }
+    </script>
+    </head>
+    <body>
+    <nav class="n1">
+        <div>
+    <header><img src="/images/DAIICT.jpg" class="img1" /></header>
+    </div>
+     <div class="menu1">
+                        <div class="menualign1"><a href="homepageSAC.html" class="selected">Home</a>
+                        <a href="inventory.html" >Inventory</a>
+                        <a href="profile/">Profile</a>
+                        <a href="Reports/">Reports</a>
+                          <a href="ChangePassword.html">Change Password</a>
+                        <a href="login.html">Logout</a>
+                        </div>
+                    </div>
+      </nav>  
+    <div class="d1">
+    <form align="center" method="POST" action="#" name="sacForm" id="sacForm">
+        <br/>
+        <h2 class="h11">SAC HOMEPAGE</h2>
+        <table align="center">
+        <tr>
+            <td><label class="sel1">Type of equipment: </label></td>
+            <td><select required id="sel1" class="sel" name="equipmentID">
+                <option value="">Select equipment</option>
+                <% data.stock.forEach(result=>{ %>
+                    <% if(result.NumberOfAvailable==0){ %>
+                    <option value="" aria-readonly="true"><%= result.name %></option>
+                    <%} 
+                    else{
+                    %>
+                    <option value="<%= result._id %>"><%=result.name %></option>
+                <% }) %>
+                </select>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td><label class="qty">Quantity: </label></td>
+            <td><input type="number" class="qty1" id="qty1" onfocusout="validateForm()" required></td>
+            <td><span id="error-qty" style="color: red" ></span></td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td><label class="sid1">Student ID:</label></td>
+            <td><input type="text" name="sid" class="sid" id="sid" onfocusout="username()"  onkeypress="return isNumberKey(event)" required></td>
+            <td><span id="error-ID" style="color: red"></span></td>
+        </tr>
+        <tr></tr>
+        <tr align="center">
+            <td colspan="2"><button value="scanqr" name="scanqr" class="btn1" id="scan" onclick="f1()">Scan QR</button></td >
+        </tr>
+        <tr></tr>
+        <tr align="center">
+        <td><button type="submit" class="btn3" >Submit</button></td>
+        <td><button type="reset" class="btn4">Clear</button></td>
+    </tr>
+    </table>
+    <br/>
+    <br/>
+    </form>
+    </div>
+    </body>
+    </html> -->
+    <html>
+        <body>
+            <h1>hello</h1>
+        </body>
+    </html>
