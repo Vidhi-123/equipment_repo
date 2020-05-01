@@ -1,8 +1,37 @@
 const express=require('express');
 const router=express.Router();
 const inventorytb=require('../model/sportsinventory_model');
+var user=require('../model/user_records');
 
-router.get("/",function(req,res,next){
+var loggedin = function (req,res,next)
+{
+    if(req.isAuthenticated())
+    {
+        user.find({_id : req.user._id},function(err,rows){
+            if(err)
+            {
+                res.redirect('/');
+            }
+            else{
+                if(rows[0].userTypeId==3)
+                {
+                    next() // if logged in
+                }
+                else{
+                    res.redirect('/');
+                }
+            }
+        })
+       
+    }
+        
+        
+	else
+		res.redirect('/');
+}
+
+
+router.get("/",loggedin,function(req,res,next){
     inventorytb.find(function(err,inventoryrecord){
         if(err){
             return res.send(err);

@@ -9,13 +9,41 @@ var usersRouter = require('./routes/users');
 var inventoryRouter=require('./routes/sportsinventory_router');
 var equipment=require('./routes/equipment_router');
 var equipmentReturn=require('./routes/equipment_Return_Entry');
+var scanqr=require('./routes/scanqr_router');
 
 var crypto = require ('crypto');
+const session = require('express-session');
+const passport = require('passport');
 
 
 
 var app = express();
 
+
+var sessionStore = new session.MemoryStore;
+
+app.use(session({
+    cookie: { maxAge: 60000 },
+    store: sessionStore,
+    saveUninitialized: false,
+    resave: 'true', //resaves session if time limit ended
+    secret: 'secret'
+}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./passport-config')(passport);
+
+
+const userRoute = require("./routes/user_routes");
+const homeRoute = require("./routes/homepage_router")(passport);
+
+
+
+app.get("/qrcode1",function(req,res,next){
+  res.render('qrcode1');
+})
 app.get("/decryptID/:id",(req,res) => {
 
   
@@ -32,6 +60,11 @@ app.get("/decryptID/:id",(req,res) => {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// app.get('/',(req,res,next)=>{
+  
+  
+//   res.render('homepage');
+// })
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -44,6 +77,9 @@ app.use('/users', usersRouter);
 app.use('/inventory',inventoryRouter);
 app.use('/equipment',equipment);
 app.use('/equipmentReturn',equipmentReturn);
+app.use('/scanqr',scanqr);
+app.use("/users", userRoute);
+app.use("/home",homeRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -179,7 +179,7 @@ form{
 	opacity: 0.8;
 }
 .sid1,.sid{
-	visibility: hidden;
+	/* visibility: hidden; */
 }
 
 .img1{

@@ -4,8 +4,36 @@ var equipment = require('../model/equipment');
 var inventory = require('../model/sportsinventory_model');
 var sacrecords = require('../model/SacRecords_model');
 var mail_equ=require('../model/mail_equipment');
+var user=require('../model/user_records');
 
-router.get("/:equipmentID?/:studentID?/:quantity?", function (req, res, next) {
+var loggedin = function (req,res,next)
+{
+    if(req.isAuthenticated())
+    {
+        user.find({_id : req.user._id},function(err,rows){
+            if(err)
+            {
+                res.redirect('/');
+            }
+            else{
+                if(rows[0].userTypeId==3)
+                {
+                    next() // if logged in
+                }
+                else{
+                    res.redirect('/');
+                }
+            }
+        })
+       
+    }
+        
+        
+	else
+		res.redirect('/');
+}
+
+router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res, next) {
     if(req.params.equipmentID && req.params.studentID && req.params.quantity)
     {
         console.log(req.params.equipmentID);
@@ -131,7 +159,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?", function (req, res, next) {
             res.send(err);
         }
         else {
-            res.render('equipment_borrow', { data: { stock: inventoryrecord } });
+            res.render('equipment_borrow', { data: { stock: inventoryrecord }, title: req.user.fName + req.user.lName});
             //res.json(inventoryrecord);
         }
     });
