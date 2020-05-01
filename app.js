@@ -10,6 +10,11 @@ var inventoryRouter=require('./routes/sportsinventory_router');
 var equipment=require('./routes/equipment_router');
 var equipmentReturn=require('./routes/equipment_Return_Entry');
 var scanqr=require('./routes/scanqr_router');
+var qrcode=require('./routes/qrcode_router');
+var lib_tmp=require('./routes/lib_tmp_router');
+var lib=require('./routes/lib_main_router');
+var lib_tmp_out=require('./routes/lib_tmp_out_router');
+var time1=require('./timer');
 
 var crypto = require ('crypto');
 const session = require('express-session');
@@ -44,6 +49,12 @@ const homeRoute = require("./routes/homepage_router")(passport);
 app.get("/qrcode1",function(req,res,next){
   res.render('qrcode1');
 })
+
+app.get('/',(req,res,next)=>{
+  
+  time1.f2();
+  res.redirect('/index');
+})
 app.get("/decryptID/:id",(req,res) => {
 
   
@@ -55,6 +66,7 @@ app.get("/decryptID/:id",(req,res) => {
 
   res.send(mystr);
 })
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -72,7 +84,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/inventory',inventoryRouter);
 app.use('/equipment',equipment);
@@ -80,6 +92,11 @@ app.use('/equipmentReturn',equipmentReturn);
 app.use('/scanqr',scanqr);
 app.use("/users", userRoute);
 app.use("/home",homeRoute);
+
+app.use('/lib',lib);
+app.use('/lib_tmp',lib_tmp);
+app.use('/qrcode',qrcode);
+app.use('/lib_tmp_out',lib_tmp_out);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

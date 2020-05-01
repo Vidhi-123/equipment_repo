@@ -1,0 +1,62 @@
+<!-- <html>
+    <head>
+
+        
+    </head>
+    <body>
+        <form method="POST" action="/qrcode">
+
+            <input type="text" name="id" placeholder="id">
+            <button type="submit">Submit</button>
+            
+        </form>
+        
+    </body>
+</html> -->
+
+
+
+
+
+
+
+<html>
+<head>
+        
+        <link rel="stylesheet" type="text/css" href="http://localhost:3000/stylesheets/homepage.css" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:3000/stylesheets/regenerateQR.css" />
+                
+        
+</head>
+<body>
+<nav class="n1">
+	<div>
+		<br>
+<header><img src="http://localhost:3000/images/DAIICT.jpg" class="img1"/></header>
+</div>
+ <div class="menu1">
+                    <div class="menualign1">
+                        <a href="equipment_avaiblity1.html" class="selected">Home</a>
+                        <a href="homepageStudent.html">Profile</a>
+                        <a href="regenerateQR.html">Regenerate QR</a>
+                        <a href="viewQRFinal.html">View QR</a>
+                        <a href="ChangePassword.html">Change Password</a>
+                        <a href="login.html">Logout</a>
+                    </div>
+                </div>
+  </nav>  
+        <div class="container-fluid">
+            <form method="POST" action="/qrcode">
+                <br />
+                <input type="text" name="uname" class="formStyle" placeholder="Enter your ID" id="uname" maxlength="9" onfocusout="username()" required />
+                <br />
+                <span id="error-ID" style="color:red;"></span>
+                <br />
+                
+              
+                <input type="submit" id="submitbutton"  value="Email"></input>
+              </form> 
+        </div>
+        <script src="http://localhost:3000/javascripts/regenerateQR.js"></script>
+</body>
+</html>

@@ -55,6 +55,10 @@ userRouter.get("/loadHomePage",loggedin, (req,res)=>{
        // localStorage.setItem('user_id',req.user._id);
 		res.redirect('/equipment');
 	}
+	else if(userType==4)
+	{
+		res.redirect('/lib_tmp');
+	}
 	//TODO Edit your respective homepages
 })
 module.exports=userRouter;

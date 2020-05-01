@@ -34,12 +34,12 @@ let userSchema = new mongoose.Schema(
 	courseName:
 	{
 		type: String,
-		required: true
+		required: false
 	},
 	batchYear:
 	{
 		type: Number,
-		required: true
+		required: false
 	},
 	password:
 	{
