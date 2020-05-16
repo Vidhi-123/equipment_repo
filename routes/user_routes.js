@@ -59,6 +59,10 @@ userRouter.get("/loadHomePage",loggedin, (req,res)=>{
 	{
 		res.redirect('/lib_tmp');
 	}
+	else if(userType==5)
+	{
+		res.redirect('/student_homepage1');
+	}
 	//TODO Edit your respective homepages
 })
 module.exports=userRouter;

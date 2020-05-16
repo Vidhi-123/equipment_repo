@@ -32,7 +32,7 @@ var loggedin = function (req,res,next)
 		res.redirect('/');
 }
 
-router.get('/',loggedin,function(req,res,next){
+router.get('/',function(req,res,next){
     
    
     tmp_lib.find(function(err,docs){

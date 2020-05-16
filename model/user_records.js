@@ -29,7 +29,7 @@ let userSchema = new mongoose.Schema(
 	lName:
 	{
 		type: String,
-		required: true
+		required: false
 	},
 	courseName:
 	{
@@ -44,6 +44,11 @@ let userSchema = new mongoose.Schema(
 	password:
 	{
 		type: String,
+		required: true
+	},
+	qr_code:
+	{
+		type:String,
 		required: true
 	}
 });

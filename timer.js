@@ -14,7 +14,7 @@ var time={
                     var date1 = new Date(); // Create a Date object to find out what time it is
                     console.log(date1.getMinutes());
                     //console.log(global);
-                    if(date1.getHours() === 12 && date1.getMinutes() === 18 ){ // Check the time
+                    if(date1.getHours() === 15 && date1.getMinutes() === 51 ){ // Check the time
                         
                        
                         tmp_lib.find(function(err,docs){

@@ -14,8 +14,9 @@ var qrcode=require('./routes/qrcode_router');
 var lib_tmp=require('./routes/lib_tmp_router');
 var lib=require('./routes/lib_main_router');
 var lib_tmp_out=require('./routes/lib_tmp_out_router');
+var student_home=require('./routes/student_homepage_router');
 var time1=require('./timer');
-
+var student_borrow_history=require('./routes/equipment_borrows_history');
 var crypto = require ('crypto');
 const session = require('express-session');
 const passport = require('passport');
@@ -46,9 +47,13 @@ const homeRoute = require("./routes/homepage_router")(passport);
 
 
 
-app.get("/qrcode1",function(req,res,next){
-  res.render('qrcode1');
+app.get("/generateqr",function(req,res,next){
+  res.render('qr_code');
 })
+
+// app.get("/student_home",function(req,res,next){
+//   res.render('/student_homepage');
+// })
 
 app.get('/',(req,res,next)=>{
   
@@ -90,9 +95,10 @@ app.use('/inventory',inventoryRouter);
 app.use('/equipment',equipment);
 app.use('/equipmentReturn',equipmentReturn);
 app.use('/scanqr',scanqr);
+app.use('/student_homepage1',student_home);
 app.use("/users", userRoute);
 app.use("/home",homeRoute);
-
+app.use('/borrow_history',student_borrow_history);
 app.use('/lib',lib);
 app.use('/lib_tmp',lib_tmp);
 app.use('/qrcode',qrcode);

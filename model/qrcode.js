@@ -6,10 +6,12 @@ const crypto = require('crypto');
 var nodemailer=require('nodemailer');
 var qr={
     
-    generateQR(id,callback)
+    generateQR(id,id1,callback)
     {
+        
+        console.log(id1);
         let mykey = crypto.createCipher('aes-128-cbc', 'dascanner');
-        let encryptedID = mykey.update(id, 'utf8', 'hex')
+        let encryptedID = mykey.update(id1, 'utf8', 'hex')
         encryptedID += mykey.final('hex');
 
         let qr_png=qrimg.imageSync(encryptedID,{ type: 'png'});

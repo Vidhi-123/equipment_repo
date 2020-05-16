@@ -5,9 +5,11 @@ var inventory = require('../model/sportsinventory_model');
 var sacrecords = require('../model/SacRecords_model');
 var mail_equ=require('../model/mail_equipment');
 var user=require('../model/user_records');
+const date = require('date-and-time');
 
 var loggedin = function (req,res,next)
 {
+    console.log(req.user._id);
     if(req.isAuthenticated())
     {
         user.find({_id : req.user._id},function(err,rows){
@@ -45,12 +47,12 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
             }
             else {
                 if (rows.length == 0) {
-                    var x = Date.now();
-                    var dat_obj = new Date(x);
+                    var x =new Date();
+                   
                     const equi = new equipment({
                         equipment_id: req.params.equipmentID,
                         student_id: req.params.studentID,
-                        issue_date: new Date(dat_obj.getFullYear(), dat_obj.getMonth(), dat_obj.getDate()),
+                        issue_date: date.format(x, 'DD-MM-YYYY'),
                         quantity: req.params.quantity
     
     
@@ -83,7 +85,9 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
                     console.log(rows);
                     let tot_qty=rows[0].quantity;
                     var x = Date.now();
-                    var dat_obj = new Date(x);
+                    var dat_obj=new Date(x);
+                    var now=new Date();
+
                     //quantity aema hase j so eno use karine loan nu karje
                     //console.log(dat_obj-rows[0].issue_date);
     
@@ -99,7 +103,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
                         student_id: rows[0].student_id,
                         issue_date: rows[0].issue_date,
                         quantity:req.params.quantity,
-                        return_date: new Date(dat_obj.getFullYear(), dat_obj.getMonth(), dat_obj.getDate()),
+                        return_date: date.format(now, 'DD-MM-YYYY'),
                         loan: loan1
     
     
@@ -159,7 +163,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
             res.send(err);
         }
         else {
-            res.render('equipment_borrow', { data: { stock: inventoryrecord }, title: req.user.fName + req.user.lName});
+            res.render('equipment_borrow', { data: { stock: inventoryrecord }});
             //res.json(inventoryrecord);
         }
     });
@@ -188,12 +192,12 @@ router.post('/', function (req, res, next) {
         }
         else {
             if (rows.length == 0) {
-                var x = Date.now();
-                var dat_obj = new Date(x);
+                var x = new Date();
+                
                 const equi = new equipment({
                     equipment_id: req.body.equipmentID,
                     student_id: req.body.studentID,
-                    issue_date: new Date(dat_obj.getFullYear(), dat_obj.getMonth(), dat_obj.getDate()),
+                    issue_date: date.format(x, 'DD-MM-YYYY'),
                     quantity: req.body.quantity
 
 
@@ -228,6 +232,7 @@ router.post('/', function (req, res, next) {
                 let tot_qty=rows[0].quantity;
                 var x = Date.now();
                 var dat_obj = new Date(x);
+                var now=new Date();
                 //quantity aema hase j so eno use karine loan nu karje
                 //console.log(dat_obj-rows[0].issue_date);
 
@@ -243,7 +248,7 @@ router.post('/', function (req, res, next) {
                     student_id: rows[0].student_id,
                     issue_date: rows[0].issue_date,
                     quantity:req.body.quantity,
-                    return_date: new Date(dat_obj.getFullYear(), dat_obj.getMonth(), dat_obj.getDate()),
+                    return_date: date.format(now, 'DD-MM-YYYY'),
                     loan: loan1
 
 

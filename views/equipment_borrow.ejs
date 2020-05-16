@@ -9,13 +9,15 @@
     <script type="text/javascript">
 
 
-function CheckQR(id)
+function CheckQR(id,status)
     {
       console.log("in CheckQR");
       console.log(id);
+      console.log(status);
     $.post('/scanqr/',
      {
          id: id,
+         status:status,
          mes: "call from ajax"
     },
     (data, status)=>
@@ -33,6 +35,7 @@ function CheckQR(id)
         else
          {
              //sachu pdetoh ahiya aavo
+             
              let s1=Number(data[0]._id);
              let batch_year=Math.trunc(s1/100000);
                let batch_id=Math.trunc(s1/1000)%100;
@@ -98,7 +101,7 @@ function CheckQR(id)
   {
     var id = document.getElementById("studentId").value;
       console.log(id);
-      CheckQR(id);
+      CheckQR(id,2);
 
   }
     function decodeOnce(codeReader, selectedDeviceId)
@@ -123,9 +126,9 @@ function CheckQR(id)
 
 
         setTimeout(()=>{
-          document.getElementById('studentId').value = decryptedID;
+          document.getElementById('studentId').value = decryptedID.substr(0,9);
 
-        CheckQR(decryptedID);
+        CheckQR(decryptedID,1);
         },1000)
         
       })
@@ -285,6 +288,9 @@ function CheckQR(id)
         }
 
     </script>
+    <style>
+      
+    </style>
     </head>
     <body>
         
@@ -325,7 +331,7 @@ function CheckQR(id)
                 </tr>
                 <tr align="center">
                   <td colspan="2">
-                    <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+                    <video  width="60%" height="40%" style="border: 1px solid gray" id="video"></video>
                   </td>
                 </tr>
                <tr align="center">
