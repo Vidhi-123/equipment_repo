@@ -15,6 +15,7 @@ var lib_tmp=require('./routes/lib_tmp_router');
 var lib=require('./routes/lib_main_router');
 var lib_tmp_out=require('./routes/lib_tmp_out_router');
 var student_home=require('./routes/student_homepage_router');
+var student_header=require('./routes/header_router');
 var time1=require('./timer');
 var student_borrow_history=require('./routes/equipment_borrows_history');
 var crypto = require ('crypto');
@@ -29,7 +30,7 @@ var app = express();
 var sessionStore = new session.MemoryStore;
 
 app.use(session({
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 6000000 },
     store: sessionStore,
     saveUninitialized: false,
     resave: 'true', //resaves session if time limit ended
@@ -58,7 +59,7 @@ app.get("/generateqr",function(req,res,next){
 app.get('/',(req,res,next)=>{
   
   time1.f2();
-  res.redirect('/index');
+  res.render('welcome');
 })
 app.get("/decryptID/:id",(req,res) => {
 
@@ -97,6 +98,7 @@ app.use('/equipmentReturn',equipmentReturn);
 app.use('/scanqr',scanqr);
 app.use('/student_homepage1',student_home);
 app.use("/users", userRoute);
+app.use("/student_header", student_header);
 app.use("/home",homeRoute);
 app.use('/borrow_history',student_borrow_history);
 app.use('/lib',lib);
@@ -110,14 +112,14 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;

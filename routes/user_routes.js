@@ -1,8 +1,6 @@
 const express = require("express");
 const bcrpyt=require('bcrypt');
-// import validators
-//const { check, validationResult } = require('express-validator/check');
-//const { matchedData, sanitize } = require('express-validator/filter');
+
 
 
 // bring user model

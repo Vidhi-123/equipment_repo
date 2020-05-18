@@ -207,10 +207,12 @@ function CheckQR(id,status)
           document.getElementById('scan-div').hidden=false;
         }
     </script>
+     <link rel="stylesheet" type="text/css" href="/stylesheets/AdminDashboard_css.css"></link>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="/stylesheets/homepageSAC.css"></link> -->
-    <link rel="stylesheet" type="text/css" href="/stylesheets/homepage.css"></link>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/homepageLIB.css"></link>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" type="text/css" href="http://localhost:3000/stylesheets/homepage.css"></link>
+    <link rel="stylesheet" type="text/css" href="http://localhost:3000/stylesheets/homepageLIB.css"></link>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -219,14 +221,17 @@ function CheckQR(id,status)
   table {
   /* border: 1px solid black; */
   table-layout: fixed;
- width:100px;
- overflow: hidden;
+  text-align: left;
+  width:80px;
+  overflow: hidden;
+  margin-top: 13px;
+  
 }
 
 th,
 td {
   /* border: 1px solid black; */
-  width: 100px;
+  width: 80px;
   overflow: hidden;
 }
 td select{
@@ -251,36 +256,24 @@ td select{
     
 	
 
-<nav class="n1">
-	<div>
-		
-<header><img src="/images/DAIICT.jpg" class="img1"  /></header>
-</div>
- <div class="menu1">
-                    <div class="menualign1">
-                      <a href="homepageLIB.html" class="selected">Home</a>
-                    <!-- <a href="inventory.html" >Inventory</a> -->
-                    <!-- <a href="profile/">Profile</a> -->
-                    <a href="Reports/">Reports</a>
-              		<a href="ChangePassword.html">Change Password</a>
-                    <a href="login.html">Logout</a>
-                    </div>
-                </div></nav>  
+    <%- include('lib_header') %> 
 <div class="container-fluid">
 <form align="center" method="POST"action="#">
 	
-	<h2 class="h11">Library</h2>
+	<h1   style="color: #0060b4;font-weight: bolder;">Library</h1>
 	<!-- <button type="button" class="btn1" onclick="myalert()">Available seats </button> <br><br> -->
 	<!-- <label for="lname">Available seats are:</label> -->
 	
-	<lable>Available seats: </lable>
-	<%= avl_seats %>
-	<br>
+	<label  style="color: #0060b4;">Available seats: </label>
+	<img src="http://localhost:3000/images/chair.png" width="100px" height="100px">
+        <h3 style="display:inline;color:#0060b4"><%= avl_seats %></h3>
+  <br>
+  
 <div class="row" >
   <div class="col-md-6" >
-	<button type="button" id="startButton" class="btn1" onclick="f1()">Scan QR Code</button>
+	<button type="button" id="startButton" class="btn1" onclick="f1()"  >Scan QR Code</button>
   
-  <button type="button" class="btn1" onclick="f2()">Clear all IN enteriess </button>
+  <button type="button" class="btn1" onclick="f2()"   >Clear all IN enteriess </button>
   <br>
   <span id="error-ID" style="color:red;"></span>
   <div id="scan-div" class="table-responsive" hidden>
@@ -301,14 +294,14 @@ td select{
       </tr>
      <tr align="center">
        <td colspan="2">
-        <label  >OR Enter Manually:</label>
+        <label  style="color: #0060b4;">OR Enter Manually:</label>
 
        </td>
     
      </tr>
      <tr>
        <td>
-         <label>
+         <label style="color: #0060b4;">
         StudentId:
       </label>
        </td>
@@ -361,8 +354,8 @@ td select{
 
 <div class="col-md-6">
   <div class="table-responsive">
-  <table class="table" style="font-size: medium;">
-    <thead style="background-color:#3295a8;color: white;" >
+  <table class="table" style="font-size: medium;width: 92%;">
+    <thead style="background-color:#20232e;color: white;" >
       <tr>
         
         <th scope="col">Student id</th>
@@ -384,8 +377,8 @@ td select{
       
     </tbody>
   </table>
-
 </div>
+
 </div>
 </div>
 

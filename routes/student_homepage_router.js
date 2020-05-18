@@ -49,7 +49,9 @@ router.get('/',loggedin,function(req,res,next){
                 }
                 else
                 {
-                    console.log(rows1);
+
+                    
+                    // console.log(rows1);
                     let x=200-rows1.length;
                     console.log(x);
                     console.log(rows);

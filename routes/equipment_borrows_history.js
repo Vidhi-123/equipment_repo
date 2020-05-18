@@ -91,16 +91,4 @@ router.get('/',loggedin,function(req,res,next){
 })
 
 
-
-
-
-
-
-
-
-
-
 module.exports=router
-
-
-

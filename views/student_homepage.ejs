@@ -23,11 +23,11 @@
   
     <div class="col-md-6">
 
-        <h2>Equipment Available</h2>
+        <h2 style="color: #0060b4">Equipment Available</h2>
         
         <div class="table-responsive">
             <table class="table" style="font-size: medium;">
-                <thead style="background-color: #3295a8;color: white;">
+                <thead style="background-color: #20232e;color: white;">
                     <th>Equipment Name</th>
                     <th>Quantity</th>
                 </thead>
@@ -47,24 +47,13 @@
 
     <div class="col-md-6">
 
-        <h2>Availabe Seats on Librabry</h2>
-        <label><%= abl_seats %></label>
+        <h2 style="color: #0060b4">Availabe Seats on Library</h2>
+        <img src="http://localhost:3000/images/chair.png" width="100px" height="100px">
+        <h3 style="display:inline"><%= abl_seats %></h3 style="display:inline">
     </div>
 </div>
 </div>
 
-
-  <script>
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-    }
-    </script>
-    
     <%- include('footer') %>
   
 

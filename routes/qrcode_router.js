@@ -6,20 +6,27 @@ const qrimg=require('qr-image');
 
 const fs=require('fs');
 
-router.post("/",function(req,res,next){
+router.get("/",function(req,res,next){
 
-   let id1=req.body.uname+Date.now();
-    user.find({_id:req.body.uname},function(err,rows){
+    console.log(req.user._id);
+    let id1=req.user._id;
+    id1=id1.toString();
+   id1=id1+Date.now();
+   
+   console.log(id1);
+    user.find({_id:req.user._id},function(err,rows){
         if(err)
        {
             res.json(err);
         }
         else
         {
+            
             console.log(rows);
             if(rows.length==1)
             {
                  rows[0].qr_code=id1;
+                 rows[0].qr_cnt--;
                  rows[0].save(function(err1,res1){
                      if(err1)
                      {
@@ -27,7 +34,7 @@ router.post("/",function(req,res,next){
                      }
                      else
                      {
-                        qr.generateQR(req.body.uname,id1,function(err){
+                        qr.generateQR(req.user._id,id1,function(err){
                             if(err)
                             {
                                 res.json(err);
@@ -47,15 +54,9 @@ router.post("/",function(req,res,next){
     })
 
 
-        
-
-    
-
-    
-
     //res.json({"status":"successful"});
     setTimeout(()=>{
-        res.redirect('/generateqr');
+        res.redirect('/student_homepage1');
     },1000)
     
     

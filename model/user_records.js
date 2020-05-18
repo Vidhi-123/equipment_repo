@@ -50,7 +50,13 @@ let userSchema = new mongoose.Schema(
 	{
 		type:String,
 		required: true
+	},
+	qr_cnt:
+	{
+		type:Number,
+		required: true
 	}
+
 });
 userSchema.methods.comparePassword = (password,hash)=>
 {

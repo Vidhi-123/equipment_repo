@@ -20,7 +20,7 @@ body{
 	font-size: 1.75em;
 }
 
-.menu1 a{
+/* .menu1 a{
 	text-align: center;
 	height: 12vh;
 	font-size: 2.75em;
@@ -31,12 +31,12 @@ body{
 }
 .menu1 a:hover{
 	text-decoration:underline;
-}
-.menu1 .menualign1{
+} */
+/* .menu1 .menualign1{
 	text-align: center;
 	padding:20px;
 	background-color: #3295a8;
-}
+} */
 
 
 @media only screen and (min-width: 1312px){
@@ -44,7 +44,7 @@ body{
 		font-size: 40px; 
 		width:100%;
 		font-family: sans-serif;
-		background-color: #eeeeee;
+		background-color: white;
 		color: #7b7b7b;
 	}
 	.chooseBtn{
@@ -62,7 +62,7 @@ body{
 	align-content: center;
 	}
 	.updatebtn{
-		background-color: #3295a8;
+		background-color: #20232e;
 	color: white;
 	font-size: 1.75em;
 	padding: 14px 20px;
@@ -71,14 +71,14 @@ body{
 	border-radius: 20px;
 	width:30%;
 	}
-	.img1{
+	/* .img1{
 	margin-left: 0;
 	margin-right: 0;
 	align-self: center;
 	height: 35vh;
 	width: 100%;
-	background-color:navy;
-}
+	background-color:navy; */
+/* } */
 .sel,.qty1,.sid{
 	width:100%;
 	height:7vh ;
@@ -86,29 +86,32 @@ body{
 }
 	
 .btn3,.btn4{
-	background-color: #3295a8;
+	background-color: #20232e;
 	color: white;
-	font-size: 1.75em;
-	padding: 14px 20px;
+	/* font-size: 1.75em; */
+	padding: 10px 20px;
 	margin: 8px 0;
 	border: none;
 	cursor: pointer;
 	width:70%;
-	border-radius: 20px;
+	
 }
 .btn3{
-	width: 100%;
+	width: 60%;
+	height:10%;
 }
 .btn1{
 	visibility: hidden;
 }
 
 .btn3:hover{
-	opacity: 0.8;
+	
+	background-color:#0060b4;
 }
 
 .btn4:hover{
-	opacity: 0.8;
+	background-color:#0060b4;
+
 }	
 }
 span{
@@ -131,7 +134,7 @@ span{
 	align-content: center;
 	}
 	.updatebtn{
-		background-color: #3295a8;
+		background-color: #20232e;
 	color: white;
 	font-size: 1.5em;
 	padding: 10px 15px;
@@ -141,7 +144,7 @@ span{
 	width:30%;
 	}
 .btn1{
-	background-color: #3295a8;
+	background-color: #20232e;
 	color: white;
 	font-size: 1.75em;
 	padding: 14px 20px;
@@ -153,21 +156,21 @@ span{
 	visibility: visible;
 }
 .btn3,.btn4{
-	background-color: #3295a8;
+	background-color: #20232e;
 	color: white;
-	font-size: 1.5em;
-	padding: 10px 15px;
+	/* font-size: 1.5em; */
+	padding: 5px 15px;
 	margin: 8px 0;
 	border: none;
 	cursor: pointer;
 	width:70%;
-	border-radius: 20px;
+	/* border-radius: 20px; */
 }
 form{
 	font-size: 20px; 
 	width:100%;
 	font-family: sans-serif;
-	background-color: #eeeeee;
+	background-color: white;
 	color: #7b7b7b;
 }
 .sel,.qty1,.sid{
@@ -176,20 +179,20 @@ form{
 	font-size:1.25em;
 }
 .btn1:hover{
-	opacity: 0.8;
+	background-color:#0060b4;
 }
 .sid1,.sid{
 	/* visibility: hidden; */
 }
 
-.img1{
+/* .img1{
 	margin-left: 0;
 	margin-right: 0;
 	align-self: center;
 	height: 15vh;
 	width: 100%;
 	background-color: navy;
-}
+} */
 }
 /*@media only screen and (min-width: 688px){
 

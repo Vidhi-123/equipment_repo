@@ -4,12 +4,14 @@ const User = require('./model/user_records');
 
 module.exports = function (passport){
 passport.serializeUser(function(user,done){ //add into session
-            done(null,user)
+    console.log("serialize");        
+    done(null,user)
 
 
     })
     passport.deserializeUser(function(user,done){ //remove from session
-            done(null,user);
+        console.log("deserial");   
+        done(null,user);
 
     })
 
@@ -29,11 +31,11 @@ passport.serializeUser(function(user,done){ //add into session
                     if(valid)
                     {
                         done(null,doc);
-                        console.log(doc);
+                        //console.log(doc);
                     }
                     else{
                         done(null,false);
-                        console.log(err);
+                        //console.log(err);
                     }
                 }
                 else{

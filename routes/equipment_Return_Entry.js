@@ -3,9 +3,6 @@ var router=express.Router();
 var equipment=require('../model/equipment');
 var inventory=require('../model/sportsinventory_model');
 
-
-
-
 router.put("/:id",function(req,res,next){
     if(req.params.id){
         equipment.findOne({_id:req.params.id},function(err,result1){

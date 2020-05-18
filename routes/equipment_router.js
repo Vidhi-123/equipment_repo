@@ -9,7 +9,7 @@ const date = require('date-and-time');
 
 var loggedin = function (req,res,next)
 {
-    console.log(req.user._id);
+    // console.log(req.user);
     if(req.isAuthenticated())
     {
         user.find({_id : req.user._id},function(err,rows){
@@ -27,6 +27,7 @@ var loggedin = function (req,res,next)
                 }
             }
         })
+        
        
     }
         
@@ -35,12 +36,13 @@ var loggedin = function (req,res,next)
 		res.redirect('/');
 }
 
-router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res, next) {
+router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, next) {
+    console.log("heyyyyyy");
     if(req.params.equipmentID && req.params.studentID && req.params.quantity)
     {
-        console.log(req.params.equipmentID);
-        console.log(req.params.studentID);
-        console.log(req.params.quantity);
+        //console.log(req.params.equipmentID);
+        //console.log(req.params.studentID);
+        //console.log(req.params.quantity);
         equipment.find({ student_id: req.params.studentID, equipment_id: req.params.equipmentID }, function (err, rows) {
             if (err) {
                 res.json(err);
@@ -57,7 +59,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
     
     
                     });
-                    console.log(equi);
+                    //console.log(equi);
                     equi.save(function (err, result) {
                         if (err) {
                             res.json(err);
@@ -81,8 +83,8 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
                     });
                 }
                 else {
-                    console.log("record is already there");
-                    console.log(rows);
+                    //console.log("record is already there");
+                    //console.log(rows);
                     let tot_qty=rows[0].quantity;
                     var x = Date.now();
                     var dat_obj=new Date(x);
@@ -116,7 +118,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
                         }
                         else {
                             //res.json(result);
-                            console.log(result);
+                            //console.log(result);
                             inventory.updateOne({_id:result.equipment_id},{$inc:{NumberOfAvailable:req.params.quantity}},function(err,result){
                                 if(err)
                                     res.json(err);
@@ -185,7 +187,8 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin, function (req, res,
 
 
 
-router.post('/', function (req, res, next) {
+router.post('/',loggedin, function (req, res, next) {
+    console.log("heyyyy");
     equipment.find({ student_id: req.body.studentID, equipment_id: req.body.equipmentID }, function (err, rows) {
         if (err) {
             res.json(err);

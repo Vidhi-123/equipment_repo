@@ -1,24 +1,22 @@
  .img1{
-	margin-left: 0;
-	margin-right: 0;
-	margin-top: 0;
-	height: 30vh;
-	width: 100%;
-	background-color: navy;
+	height: auto;
+  max-width: 100% !important;
+  margin-bottom: 10px;
+	background-color: white;
 	overflow: hidden;
 }
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #eeeeee;
+  background-color: white;
   
-  overflow-x: hidden;
+  
 }
 
 .topnav {
   overflow: hidden;
-  background-color: #3295a8;
+  background-color: #4b8c59;
 }
 
 .topnav a {
@@ -59,6 +57,7 @@ body {
   .menualign{
   margin-left:500px;
   }
+
 }
 
 
