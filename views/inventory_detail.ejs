@@ -98,27 +98,15 @@
 <html>
 
         <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="/stylesheets/homepageSAC.css"></link>
             <script type="text/javascript" src="/javascripts/inventory.js"></script>
         </head>
         <body>
-        <nav class="n1">
-            <div>
-        <header><img src="/images/DAIICT.jpg" class="img1" /></header>
-        </div>
-         <div class="menu1">
-                            <div class="menualign1"><a href="homepageSAC.html" class="selected">Home</a>
-                            <a href="inventory.html" >Inventory</a>
-                            <a href="profile/">Profile</a>
-                            <a href="Reports/">Reports</a>
-                              <a href="ChangePassword.html">Change Password</a>
-                            <a href="login.html">Logout</a>
-                            </div>
-                        </div>
-          </nav>  
+            <%- include('sac_header') %> 
           <br>
           <div class="chooseBtn">
-            <h2 class="title">Inventory Management</h2>
+            <h2 class="title" style="color: #0060b4;">Inventory Management</h2>
           </div>
           <div class="chooseBtn">
             <button class="updatebtn" onclick="AddNewRecord()">Add New Record</button>
@@ -127,23 +115,23 @@
     <div class="d1" id="addnewrecord">    
         <form align="center" method="POST" action="/inventory/">
             <br/>
-            <h2 class="h11">Add New Sports Equipment</h2>
+            <h2 class="h11" style="color: #0060b4;">Add New Sports Equipment</h2>
             <table align="center">
             <tr>
-                <td><label class="sel1">Type of equipment: </label></td>
+                <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
                 <td>
                     <input type="text" class="sel" name="itemName" id="itemName">
                 </td>
             </tr>
             <tr></tr>
             <tr>
-                <td><label class="qty">Quantity: </label></td>
+                <td><label class="qty" style="color: #0060b4;">Quantity: </label></td>
                 <td><input type="number" class="qty1" id="qty1" onkeyup="validateForm()" required name="totalQuantity"></td>
             </tr>
                 <tr> <td></td> <td><span id="error-qty" style="color: red" ></span></td></tr>
             <tr></tr>
             <tr>
-                    <td><label class="qty">Number Of Available: </label></td>
+                    <td><label class="qty" style="color: #0060b4;">Number Of Available: </label></td>
                     <td><input type="number" class="qty1" readonly id="availableQty" name="availableQuantity"></td>
                 </tr>
                 <tr></tr>
@@ -159,10 +147,10 @@
         <div class="d1" id="UpdateNewStock">
                 <form align="center" method="POST" action="/inventory/updatestock">
                     <br/>
-                    <h2 class="h11">Update Sports Equipment Stock</h2>
+                    <h2 class="h11" style="color: #0060b4;">Update Sports Equipment Stock</h2>
                     <table align="center">
                     <tr>
-                        <td><label class="sel1">Type of equipment: </label></td>
+                        <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
                         <td>
                                 <select required id="sel1" class="sel" name="equipmentID">
                                         <option value="">Select equipment</option>
@@ -174,7 +162,7 @@
                     </tr>
                     <tr></tr>
                     <tr>
-                            <td><label class="qty">Quantity: </label>
+                            <td><label class="qty" style="color: #0060b4;">Quantity: </label>
                                 <br>
                                 <span style="color: red; font-size: 15px;" >(quantity will be added in current quantity)</span>
                             </td>
@@ -190,6 +178,8 @@
                 <br/>
                 </form>
             </div>
+            <%- include('footer') %> 
+
         </body>
         </html>
        

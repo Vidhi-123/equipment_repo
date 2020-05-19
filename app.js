@@ -36,7 +36,11 @@ app.use(session({
     resave: 'true', //resaves session if time limit ended
     secret: 'secret'
 }));
-
+app.get('/change_password/:id',function(req,res,next){
+  res.render('change_password',{
+    id:req.params.id
+  })
+})
 
 app.use(passport.initialize());
 app.use(passport.session());
