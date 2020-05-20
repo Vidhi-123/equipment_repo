@@ -12,8 +12,7 @@ router.get('/',function(req,res,next){
         }
         else
         {
-            console.log(rows);
-            console.log(rows[0].qr_cnt);
+           
             res.send(rows[0].qr_cnt+"");
         }
     })

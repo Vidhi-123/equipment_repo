@@ -9,7 +9,7 @@ var qr={
     generateQR(id,id1,callback)
     {
         
-        console.log(id1);
+        
         let mykey = crypto.createCipher('aes-128-cbc', 'dascanner');
         let encryptedID = mykey.update(id1, 'utf8', 'hex')
         encryptedID += mykey.final('hex');

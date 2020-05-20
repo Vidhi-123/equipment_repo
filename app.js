@@ -6,18 +6,18 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var inventoryRouter=require('./routes/sportsinventory_router');
+
 var equipment=require('./routes/equipment_router');
-var equipmentReturn=require('./routes/equipment_Return_Entry');
+
 var scanqr=require('./routes/scanqr_router');
 var qrcode=require('./routes/qrcode_router');
 var lib_tmp=require('./routes/lib_tmp_router');
-var lib=require('./routes/lib_main_router');
-var lib_tmp_out=require('./routes/lib_tmp_out_router');
+
+
 var student_home=require('./routes/student_homepage_router');
 var student_header=require('./routes/header_router');
 var time1=require('./timer');
-var student_borrow_history=require('./routes/equipment_borrows_history');
+
 var crypto = require ('crypto');
 const session = require('express-session');
 const passport = require('passport');
@@ -68,7 +68,7 @@ app.get('/',(req,res,next)=>{
 app.get("/decryptID/:id",(req,res) => {
 
   
-  console.log(req.params.id);
+
   let id = req.params.id;
   var mykey = crypto.createDecipher('aes-128-cbc', 'dascanner');
   var mystr = mykey.update(id, 'hex', 'utf8')
@@ -96,19 +96,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
-app.use('/inventory',inventoryRouter);
+
 app.use('/equipment',equipment);
-app.use('/equipmentReturn',equipmentReturn);
+
 app.use('/scanqr',scanqr);
 app.use('/student_homepage1',student_home);
 app.use("/users", userRoute);
 app.use("/student_header", student_header);
 app.use("/home",homeRoute);
-app.use('/borrow_history',student_borrow_history);
-app.use('/lib',lib);
+
+
 app.use('/lib_tmp',lib_tmp);
 app.use('/qrcode',qrcode);
-app.use('/lib_tmp_out',lib_tmp_out);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

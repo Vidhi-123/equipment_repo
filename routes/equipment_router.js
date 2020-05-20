@@ -7,6 +7,37 @@ var mail_equ=require('../model/mail_equipment');
 var user=require('../model/user_records');
 const date = require('date-and-time');
 
+
+var loggedin1 = function (req,res,next)
+{
+ 
+    if(req.isAuthenticated())
+    {
+        user.find({_id : req.user._id},function(err,rows){
+            if(err)
+            {
+                res.redirect('/index');
+            }
+            else{
+                if(rows[0].userTypeId==5)
+                {
+                    next() // if logged in
+                }
+                else{
+                    res.redirect('/index');
+                }
+            }
+        })
+       
+    }
+        
+        
+	else
+		res.redirect('/index');
+}
+
+
+
 var loggedin = function (req,res,next)
 {
     // console.log(req.user);
@@ -35,6 +66,135 @@ var loggedin = function (req,res,next)
 	else
 		res.redirect('/');
 }
+
+
+
+router.get("/inventory",loggedin,function(req,res,next){
+    inventory.find(function(err,inventoryrecord){
+        if(err){
+            return res.send(err);
+        }
+       
+        res.render('inventory_detail',{data:{stock:inventoryrecord}});
+    });
+});
+
+
+router.post("/inventory",loggedin,function(req,res,next){
+   
+    //add new stock
+    const data=new inventory({
+        name:req.body.itemName,
+        NumberOfItems:req.body.totalQuantity,
+        NumberOfAvailable:req.body.availableQuantity
+    });
+   data.save(function(err,result){
+        if(err)
+            return res.send(err);
+        else{
+            //redirect to the page with updated data.
+            res.redirect('/equipment/inventory');
+    }
+    });
+});
+router.post("/inventory/updatestock",loggedin,function(req,res,next){
+    //console.log(req);
+    //update stock
+
+    inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfAvailable:req.body.quantity,NumberOfItems:req.body.quantity}},function(err,result){
+        if(err)
+            return res.send(err);
+        else{
+            res.redirect('/equipment/inventory');
+            //redirect to the page with updated data.
+        // inventorytb.find(function(err,inventoryrecord){
+        //     if(err){
+        //         return res.send(err);
+        //     }
+        //     console.log(inventoryrecord);
+        //     res.render('inventory_detail',{data:{stock:inventoryrecord}});
+        // });
+    }
+    });
+});
+
+router.put('/inventory/:id',loggedin,function(req,res,next){
+    inventory.updateOne({_id:req.params.id},req.body,function(err,record){
+        if(err)
+            return res.send(err);
+        return res.json(record);
+    });
+});
+
+router.delete('/inventory/:id',loggedin ,function(req,res,next){
+    inventory.deleteOne({_id:req.params.id},function(err,record){
+        if(err)
+            return res.send(err);
+        return res.json(record);
+    });
+});
+
+
+
+
+
+router.get('/borrow_history',loggedin1,function(req,res,next){
+    let stu_id=req.user._id.toString();
+    console.log(req.user._id);
+    console.log(stu_id);
+    sacrecords.aggregate([
+        { $match: { student_id: stu_id } },
+        {
+            $lookup:
+            {
+                from:"inventory_records",
+                localField:"equipment_id",
+                foreignField:"_id",
+                as:"equipment_borrows"
+            }
+        }
+     ],function(err1,rows1){
+         if(err1)
+         {
+             res.json(err1);
+         }
+         else
+         {
+           
+             //res.json(rows1);
+             equipment.aggregate([
+                { $match: { student_id: stu_id } },
+                {
+                    $lookup:
+                    {
+                        from:"inventory_records",
+                        localField:"equipment_id",
+                        foreignField:"_id",
+                        as:"equipment_borrows"
+                    }
+                }
+             ],function(err2,rows2){
+                 if(err2){
+                     res.json(err2);
+                 }
+                 else{
+
+
+                    console.log(rows2);
+                     //res.json(rows2);
+                     res.render('student_borrower_history',{
+                        sac_records:rows1,
+                        pending_records:rows2
+                    })
+                    
+                 }
+             })
+         }
+     })
+
+})
+
+
 
 router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, next) {
     console.log("heyyyyyy");
@@ -187,6 +347,11 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, 
 
 
 
+
+
+
+
+
 router.post('/',loggedin, function (req, res, next) {
     console.log("heyyyy");
     equipment.find({ student_id: req.body.studentID, equipment_id: req.body.equipmentID }, function (err, rows) {
@@ -205,7 +370,7 @@ router.post('/',loggedin, function (req, res, next) {
 
 
                 });
-                console.log(equi);
+               
                 equi.save(function (err, result) {
                     if (err) 
                     {
@@ -230,8 +395,7 @@ router.post('/',loggedin, function (req, res, next) {
                 });
             }
             else {
-                console.log("record is already there");
-                console.log(rows);
+           
                 let tot_qty=rows[0].quantity;
                 var x = Date.now();
                 var dat_obj = new Date(x);
@@ -264,7 +428,7 @@ router.post('/',loggedin, function (req, res, next) {
                     }
                     else {
                         //res.json(result);
-                        console.log(result);
+                     
                         inventory.updateOne({_id:result.equipment_id},{$inc:{NumberOfAvailable:req.body.quantity}},function(err,result){
                             if(err)
                                 res.json(err);

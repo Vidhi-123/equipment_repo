@@ -22,18 +22,18 @@ else{
 }
 }
 window.addEventListener('load',(event)=>{
-    console.log("load event fire");
+  
     document.getElementById('addnewrecord').hidden=true;
     document.getElementById('UpdateNewStock').hidden=true;
   });
 
   function AddNewRecord(){
-      console.log("add new records");
+    
     document.getElementById('addnewrecord').hidden=false;
     document.getElementById('UpdateNewStock').hidden=true;
   }
   function UpdateNewStock(){
-    console.log("update records records");
+    
     document.getElementById('addnewrecord').hidden=true;
     document.getElementById('UpdateNewStock').hidden=false;
   }

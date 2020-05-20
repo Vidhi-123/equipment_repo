@@ -6,7 +6,7 @@ var user=require('../model/user_records');
 
 var loggedin = function (req,res,next)
 {
-    console.log(req.user._id);
+   
     if(req.isAuthenticated())
     {
         user.find({_id : req.user._id},function(err,rows){
@@ -53,8 +53,7 @@ router.get('/',loggedin,function(req,res,next){
                     
                     // console.log(rows1);
                     let x=200-rows1.length;
-                    console.log(x);
-                    console.log(rows);
+                
                     //res.json(x);
                     res.render('student_homepage',{
                         abl_seats:x,

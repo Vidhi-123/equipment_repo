@@ -11,9 +11,8 @@
 
 function CheckQR(id,status)
     {
-      console.log("in CheckQR");
-      console.log(id);
-      console.log(status);
+    
+     
     $.post('/scanqr/',
      {
          id: id,
@@ -22,7 +21,7 @@ function CheckQR(id,status)
     },
     (data, status)=>
        {
-         console.log(data);
+       
          if(data === "ERROR")
          {
            //$('#studentId').html("<span style='color: red;'> <b>"+data+"<b></span>");
@@ -52,7 +51,7 @@ function CheckQR(id,status)
              {
                if(batch_year<=year && batch_year>=year-4)
                {
-                 console.log("new");
+             
                  window.location.href="/lib_tmp/"+data[0]._id;  
                }
                else{
@@ -62,10 +61,10 @@ function CheckQR(id,status)
              }
              else if(batch_id==11 || batch_id==12)
              {
-               console.log("new1");
+              
                 if(batch_year<=year && batch_year>=year-2)
                 {
-                  console.log("new");
+                
                   window.location.href="/lib_tmp/"+data[0]._id;
                 }
                 else
@@ -89,7 +88,7 @@ function CheckQR(id,status)
   function verifyme()
   {
     var id = document.getElementById("studentId").value;
-      console.log(id);
+     
       CheckQR(id,2);
 
   }
@@ -98,7 +97,7 @@ function CheckQR(id,status)
     {
       codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) =>
       {
-        console.log(result);
+       
         var decryptedID;
               $.ajax({
                   type: 'get',
@@ -109,7 +108,7 @@ function CheckQR(id,status)
                   success: function(data){
                     decryptedID = data;
                     alert(decryptedID);
-                    console.log(data);
+                  
                     let s1=Number(decryptedID);
                   }
                 })
@@ -132,7 +131,7 @@ function CheckQR(id,status)
     {
       let selectedDeviceId;
       const codeReader = new ZXing.BrowserQRCodeReader()
-      console.log('ZXing code reader initialized')
+    
       codeReader.getVideoInputDevices()
         .then((videoInputDevices) => {
           const sourceSelect = document.getElementById('sourceSelect')
@@ -199,7 +198,7 @@ function CheckQR(id,status)
         function f2()
         {
           alert('Removed all in entries');
-          window.location.href="/lib_tmp_out/";
+          window.location.href="/lib_tmp/lib_tmp_out/";
           
         }
         function f1()

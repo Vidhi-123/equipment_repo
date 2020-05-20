@@ -4,13 +4,13 @@ const User = require('./model/user_records');
 
 module.exports = function (passport){
 passport.serializeUser(function(user,done){ //add into session
-    console.log("serialize");        
+         
     done(null,user)
 
 
     })
     passport.deserializeUser(function(user,done){ //remove from session
-        console.log("deserial");   
+       
         done(null,user);
 
     })

@@ -8,12 +8,12 @@ const fs=require('fs');
 
 router.get("/",function(req,res,next){
 
-    console.log(req.user._id);
+ 
     let id1=req.user._id;
     id1=id1.toString();
    id1=id1+Date.now();
    
-   console.log(id1);
+  
     user.find({_id:req.user._id},function(err,rows){
         if(err)
        {
@@ -22,7 +22,7 @@ router.get("/",function(req,res,next){
         else
         {
             
-            console.log(rows);
+           
             if(rows.length==1)
             {
                  rows[0].qr_code=id1;
@@ -41,7 +41,7 @@ router.get("/",function(req,res,next){
                             }
                             else
                             {
-                                console.log("IN");
+                              
                                 
                              
                             }

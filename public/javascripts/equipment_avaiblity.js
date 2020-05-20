@@ -16,7 +16,7 @@ window.onload = function(){
 }
 function checkFun(){
    // var sportsEquipment = getSelectedOption(sel);
-    console.log("working");
+    
    var quantity = document.getElementById("qty").value;
     //for particular selected item check in the database that stock is there or not
     if(quantity == 1)
