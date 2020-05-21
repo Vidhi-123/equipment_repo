@@ -4,21 +4,23 @@ var user_records=require('../model/user_records');
 
 router.post('/',function(req,res,next){
    
+    console.log("inside router");
     if(req.body.status==1)
     {
-        user_records.find({qr_code:req.body.id},function(err,rows){
+          user_records.find({qr_code:req.body.id},function(err,rows){
             if(err)
             {
-               
-                res.send("ERROR");
+               console.log(err);
+                res.status(500).send("Qr invalid") 
             }
             else{
+                console.log(rows);
                 if(rows.length==1)
                 {
                     res.send(rows);
                 }
                 else{
-                    res.send("INVALID");
+                    res.status(500).send("Qr invalid") 
                 }
             }
         })
@@ -29,7 +31,7 @@ router.post('/',function(req,res,next){
             if(err)
             {
                 
-                res.send("ERROR");
+                res.status(500).send("Qr invalid") 
             }
             else{
                 if(rows.length==1)
@@ -37,7 +39,7 @@ router.post('/',function(req,res,next){
                     res.send(rows);
                 }
                 else{
-                    res.send("INVALID");
+                    res.status(500).send("Qr invalid") 
                 }
             }
         })

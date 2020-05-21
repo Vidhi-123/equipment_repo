@@ -105,70 +105,65 @@
         <body>
             <%- include('sac_header') %> 
           <br>
+
           <div class="chooseBtn">
             <h2 class="title" style="color: #0060b4;">Inventory Management</h2>
           </div>
-          <div class="chooseBtn">
-            <button class="updatebtn" onclick="AddNewRecord()">Add New Record</button>
-            <button class="updatebtn" onclick="UpdateNewStock()">Update New Stock</button>
-        </div>
-    <div class="d1" id="addnewrecord">    
-        <form align="center" method="POST" action="/equipment/inventory/">
-            <br/>
-            <h2 class="h11" style="color: #0060b4;">Add New Sports Equipment</h2>
-            <table align="center">
-            <tr>
-                <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
-                <td>
-                    <input type="text" class="sel" name="itemName" id="itemName">
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td><label class="qty" style="color: #0060b4;">Quantity: </label></td>
-                <td><input type="number" class="qty1" id="qty1" onkeyup="validateForm()" required name="totalQuantity"></td>
-            </tr>
-                <tr> <td></td> <td><span id="error-qty" style="color: red" ></span></td></tr>
-            <tr></tr>
-            <tr>
-                    <td><label class="qty" style="color: #0060b4;">Number Of Available: </label></td>
-                    <td><input type="number" class="qty1" readonly id="availableQty" name="availableQuantity"></td>
-                </tr>
-                <tr></tr>
-            <tr align="center">
-            <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
-            <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
-        </tr>
-        </table>
-        <br/>
-        <br/>
-        </form>
-        </div>
-        <div class="d1" id="UpdateNewStock">
-                <form align="center" method="POST" action="/equipment/inventory/updatestock">
+          <div class="container">
+          <div class="row">
+              <div class="col-md-6">
+
+                <div class="table-responsive">
+                    <table class="table" style="font-size: medium;">
+                        <thead style="background-color: #20232e;color: white;">
+                            <th>Equipment Name</th>
+                            <th>Quantity</th>
+                            <th>No of Available</th>
+                        </thead>
+                        <tbody>
+                            <% data.stock.forEach(result=>{ %>
+                            <tr>
+                                <td><%= result.name %></td>
+                                <td><%= result.NumberOfItems %></td>
+                                <td><%= result.NumberOfAvailable %></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+        
+
+              </div>
+              <div class="col-md-6">
+
+
+                <div class="chooseBtn">
+                    <button class="updatebtn" onclick="AddNewRecord()">Add New Record</button>
+                    <button class="updatebtn" onclick="UpdateNewStock()">Update New Stock</button>
+                </div>
+            <div class="d1" id="addnewrecord">    
+                <form align="center" method="POST" action="/equipment/inventory/">
                     <br/>
-                    <h2 class="h11" style="color: #0060b4;">Update Sports Equipment Stock</h2>
+                    <h2 class="h11" style="color: #0060b4;">Add New Sports Equipment</h2>
                     <table align="center">
                     <tr>
                         <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
                         <td>
-                                <select required id="sel1" class="sel" name="equipmentID">
-                                        <option value="">Select equipment</option>
-                                        <% data.stock.forEach(result=>{ %>
-                                            <option value="<%= result._id %>"><%= result.name %></option>
-                                        <% }) %>
-                                        </select>
+                            <input type="text" class="sel" name="itemName" id="itemName">
                         </td>
                     </tr>
                     <tr></tr>
                     <tr>
-                            <td><label class="qty" style="color: #0060b4;">Quantity: </label>
-                                <br>
-                                <span style="color: red; font-size: 15px;" >(quantity will be added in current quantity)</span>
-                            </td>
-                            <td><input type="number" class="qty1" id="qty1" required name="quantity"></td>
-                        </tr>
+                        <td><label class="qty" style="color: #0060b4;">Quantity: </label></td>
+                        <td><input type="number" class="qty1" id="qty1" onkeyup="validateForm()" required name="totalQuantity"></td>
+                    </tr>
+                        <tr> <td></td> <td><span id="error-qty" style="color: red" ></span></td></tr>
                     <tr></tr>
+                    <tr>
+                            <td><label class="qty" style="color: #0060b4;">Number Of Available: </label></td>
+                            <td><input type="number" class="qty1" readonly id="availableQty" name="availableQuantity"></td>
+                        </tr>
+                        <tr></tr>
                     <tr align="center">
                     <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
                     <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
@@ -177,7 +172,47 @@
                 <br/>
                 <br/>
                 </form>
-            </div>
+                </div>
+                <div class="d1" id="UpdateNewStock">
+                        <form align="center" method="POST" action="/equipment/inventory/updatestock">
+                            <br/>
+                            <h2 class="h11" style="color: #0060b4;">Update Sports Equipment Stock</h2>
+                            <table align="center">
+                            <tr>
+                                <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
+                                <td>
+                                        <select required id="sel1" class="sel" name="equipmentID">
+                                                <option value="">Select equipment</option>
+                                                <% data.stock.forEach(result=>{ %>
+                                                    <option value="<%= result._id %>"><%= result.name %></option>
+                                                <% }) %>
+                                                </select>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                    <td><label class="qty" style="color: #0060b4;">Quantity: </label>
+                                        <br>
+                                        <span style="color: red; font-size: 15px;" >(quantity will be added in current quantity)</span>
+                                    </td>
+                                    <td><input type="number" class="qty1" id="qty1" required name="quantity"></td>
+                                </tr>
+                            <tr></tr>
+                            <tr align="center">
+                            <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
+                            <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
+                        </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                        </form>
+                    </div>
+
+
+              </div>
+          </div>
+        </div>
+          
             <%- include('footer') %> 
 
         </body>

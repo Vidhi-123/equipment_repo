@@ -7,7 +7,9 @@ var mail_equ=require('../model/mail_equipment');
 var user=require('../model/user_records');
 const date = require('date-and-time');
 
-
+//This function checks 
+//whether authenticated student
+// is logged in or not 
 var loggedin1 = function (req,res,next)
 {
  
@@ -36,7 +38,9 @@ var loggedin1 = function (req,res,next)
 		res.redirect('/index');
 }
 
-
+//This function checks 
+//whether authenticated sac user
+// is logged in or not 
 
 var loggedin = function (req,res,next)
 {
@@ -68,7 +72,8 @@ var loggedin = function (req,res,next)
 }
 
 
-
+//This router will fetch the records and send to inventory 
+//details page for updating qty of equipment 
 router.get("/inventory",loggedin,function(req,res,next){
     inventory.find(function(err,inventoryrecord){
         if(err){
@@ -88,7 +93,8 @@ router.post("/inventory",loggedin,function(req,res,next){
         NumberOfItems:req.body.totalQuantity,
         NumberOfAvailable:req.body.availableQuantity
     });
-   data.save(function(err,result){
+   data.save(function(err,result)
+   {
         if(err)
             return res.send(err);
         else{
@@ -97,6 +103,9 @@ router.post("/inventory",loggedin,function(req,res,next){
     }
     });
 });
+//
+
+//updates qty and redirects to inventory page
 router.post("/inventory/updatestock",loggedin,function(req,res,next){
     //console.log(req);
     //update stock
@@ -118,13 +127,15 @@ router.post("/inventory/updatestock",loggedin,function(req,res,next){
     });
 });
 
-router.put('/inventory/:id',loggedin,function(req,res,next){
-    inventory.updateOne({_id:req.params.id},req.body,function(err,record){
-        if(err)
-            return res.send(err);
-        return res.json(record);
-    });
-});
+
+//
+// router.put('/inventory/:id',loggedin,function(req,res,next){
+//     inventory.updateOne({_id:req.params.id},req.body,function(err,record){
+//         if(err)
+//             return res.send(err);
+//         return res.json(record);
+//     });
+// });
 
 router.delete('/inventory/:id',loggedin ,function(req,res,next){
     inventory.deleteOne({_id:req.params.id},function(err,record){

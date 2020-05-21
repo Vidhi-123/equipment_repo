@@ -15,27 +15,20 @@
 
 function CheckQR(id,status)
     {
-    
-    $.post('/scanqr/',
+      $.ajax(
      {
-         id: id,
+       type:'post',
+       url:'/scanqr/',
+         
+         data:{
+          id: id,
          status:status,
-         mes: "call from ajax"
-    },
-    (data, status)=>
-       {
+         mes: "call from ajax",
+         },
+         success:function(data)
+          {
       
-         if(data === "ERROR")
-         {
-           //$('#studentId').html("<span style='color: red;'> <b>"+data+"<b></span>");
-            document.getElementById('sid2').innerHTML=data;
-         }
-         if(data === "INVALID")
-         {
-          document.getElementById('sid2').innerHTML="record is not there in table";
-         }
-        else
-         {
+         
              //sachu pdetoh ahiya aavo
              
              let s1=Number(data[0]._id);
@@ -54,6 +47,7 @@ function CheckQR(id,status)
              {
                if(batch_year<=year && batch_year>=year-4)
                {
+                document.getElementById('studentId').value = data[0]._id;
                 //window.location.href="/equipment/"+equipmentid+"/"+decryptedID+"/"+qty;
                 document.getElementById('hid-div').hidden=false;
              document.getElementById('scan-div').hidden=true;
@@ -73,6 +67,7 @@ function CheckQR(id,status)
              {
                 if(batch_year<=year && batch_year>=year-2)
                 {
+                  document.getElementById('studentId').value = data[0]._id;
                   //window.location.href="/equipment/"+equipmentid+"/"+decryptedID+"/"+qty;
                   document.getElementById('hid-div').hidden=false;
              document.getElementById('scan-div').hidden=true;
@@ -90,8 +85,13 @@ function CheckQR(id,status)
                document.getElementById('sid2').innerHTML="*ID is Invalid";
              } 
 
-             }
-           
+            },
+            error:function(RXHDR,statusText,error)
+            { 
+              let err=RXHDR.responseText;
+              document.getElementById('sid2').innerHTML=err;
+            }   
+          
              //document.getElementsByName('studentID').disabled=true;
 
          
@@ -128,7 +128,7 @@ function CheckQR(id,status)
 
 
         setTimeout(()=>{
-          document.getElementById('studentId').value = decryptedID.substr(0,9);
+          
 
         CheckQR(decryptedID,1);
         },1000)
