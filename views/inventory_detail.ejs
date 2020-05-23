@@ -4,8 +4,12 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="/stylesheets/homepageSAC.css"></link>
             <script type="text/javascript" src="/javascripts/inventory.js"></script>
+            <style>
+            
+            </style>
         </head>
         <body>
+            
             <%- include('sac_header') %> 
           <br>
 
@@ -30,7 +34,12 @@
                                 <td><%= result.name %></td>
                                 <td><%= result.NumberOfItems %></td>
                                 <td><%= result.NumberOfAvailable %></td>
+                                <% if( result.NumberOfDefects>0) { %>
                                 <td><%= result.NumberOfDefects %></td>
+                                <% } else { %>
+                                  <td> - </td>      
+                                <% } %>
+                               
                             </tr>
                             <% }) %>
                         </tbody>
@@ -82,19 +91,25 @@
                         <form align="center" method="POST" action="/equipment/inventory/updatestock">
                             <br/>
                             <h2 class="h11" style="color: #0060b4;">Update Sports Equipment Stock</h2>
+                            
                             <table align="center">
                                <tr>
-                                   <td><input type="radio" name="ch_radio" id="rqty1" value="Qty" checked>Quantity </td>
-                                   <td><input type="radio" name="ch_radio" id="rdft1" value="Dft">Defects </td>
-                                   <td><input type="radio" name="ch_radio" id="rrpr1" value="Rpr">Repairs</td>
+                                   <td colspan="2" align="center">
+                                        <input type="radio" name="ch_radio" id="rqty1" value="Qty" checked>Quantity 
+                                        &nbsp;&nbsp; &nbsp;&nbsp;                                       
+                                        <input type="radio" name="ch_radio" id="rdft1" value="Dft">Defects 
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="ch_radio" id="rrpr1" value="Rpr">Repairs
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
                                </tr> 
                             <tr>
                                 <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
                                 <td>
-                                        <select required id="sel1" class="sel" name="equipmentID">
+                                        <select required id="sel1" class="sel" name="equipmentID" onchange="v1()">
                                                 <option value="">Select equipment</option>
                                                 <% data.stock.forEach(result=>{ %>
-                                                    <option value="<%= result._id %>"><%= result.name %></option>
+                                                    <option  data-dft="<%= result.NumberOfDefects %>" value="<%= result._id %>"><%= result.name %></option>
                                                 <% }) %>
                                                 </select>
                                 </td>
@@ -124,12 +139,22 @@
                         <tr></tr>
                         <tr>
                             <tbody  id="rpr2" >
-                            <td><label class="qty" style="color: #0060b4;">Repair: </label>
-                                <br>
-                                <span style="color: red; font-size: 15px;" >(Repair will be added in current quantity)</span>
-                            </td>
-                            <td><input type="number" class="rpr1" id="repair1" name="Repair"></td>
+                                <td><label class="qty" style="color: #0060b4;">Repair: </label>
+                                    <br>
+                                    <span style="color: red; font-size: 15px;" >(Repair will be added in current quantity)</span>
+                                </td>
+                                <td><input type="number" class="rpr1" id="repair1" name="Repair"></td>
                             </tbody>
+                            <tbody id="rpr3">
+                                
+                                <td colspan="2"><span style="color:red;font-size: 15px;"> No Defects </span></td>
+                            </tbody>
+                            
+                                <!-- <td><span style="color: red; font-size: 15px;" > No defects  </span></td> -->
+                            
+                            
+                            
+                            
                         </tr>
                             <tr align="center">
                             <td><button type="submit" class="btn3" id="submitBtn" onclick="submitFn()">Submit</button></td>
@@ -149,6 +174,28 @@
             <%- include('footer') %> 
 
 
+            <script>
+                let Defected_Items=1;
+                document.getElementById('rpr3').hidden=true;
+                function v1()
+                {
+                    let x=document.getElementById('sel1');
+                    
+                    var y=x.options[x.selectedIndex].getAttribute('data-dft');
+      
+                      Defected_Items=Number(y);
+                      if(Defected_Items==0)
+                      {
+                          document.getElementById('rpr2').hidden=true;
+                          document.getElementById('rpr3').hidden=false;
+                      }
+                      else
+                      {
+                        document.getElementById('rpr2').hidden=false;
+                          document.getElementById('rpr3').hidden=true;
+                      }
+                }
+            </script>
     
 
         </body>
