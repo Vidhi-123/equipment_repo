@@ -1,31 +1,80 @@
-function validateForm(ev){
-	var quant = document.getElementById('qty1').value;
-if(quant<0 || quant==='0'){ //=== was matching value string with 0 numeric so was false
-document.getElementById('error-qty').innerHTML="*Please enter a valid number";
-document.getElementById('qty1').focus();
-}
-else{
-    document.getElementById('error-qty').innerHTML=" ";
-    document.getElementById('availableQty').value=quant;
-}
-}
 
-function validateForm1(ev){
-	var quant = document.getElementById('qty2').value;
-if(quant<0 || quant==='0'){ //=== was matching value string with 0 numeric so was false
-document.getElementById('error-qty1').innerHTML="*Please enter a valid number";
-document.getElementById('qty2').focus();
-ev.preventDefault();
-}
-else{
-    document.getElementById('error-qty1').innerHTML=" ";
-}
-}
 window.addEventListener('load',(event)=>{
   
     document.getElementById('addnewrecord').hidden=true;
     document.getElementById('UpdateNewStock').hidden=true;
+    document.getElementById('rqty1').addEventListener("change",f1);
+    document.getElementById('rdft1').addEventListener("change",f1);
+    document.getElementById('rrpr1').addEventListener("change",f1);
+    document.getElementById('dft2').hidden=true;
+    document.getElementById('rpr2').hidden=true;
+    document.getElementById('defects1').required=false;
+    document.getElementById('repair1').required=false;
   });
+  function submitFn(){
+    if(document.getElementById('rqty1').checked){
+        let box = document.getElementById('qty1');
+        if(box.value.length >=1){
+          return true;
+        }
+        else{
+          return false;
+        }
+    }
+    else if(document.getElementById('rrpr1').checked){
+      let box = document.getElementById('repair1');
+      if(box.value.length >=1){
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+  else if(document.getElementById('rdft1').checked){
+    let box = document.getElementById('defects1');
+    if(box.value.length >=1){
+      return true;
+    }
+    else{
+      return false;
+    }
+}
+  }
+  function f1()
+  {
+      console.log("in");
+      if(document.getElementById('rqty1').checked)
+      {
+        console.log("in if1");
+          document.getElementById('dft2').hidden=true;
+          document.getElementById('qty2').hidden=false;
+          document.getElementById('rpr2').hidden=true;
+          document.getElementById('qty1').required=true;
+          
+      }
+      else if(document.getElementById('rrpr1').checked)
+      {
+        console.log("in if2");
+        document.getElementById('dft2').hidden=true;
+        document.getElementById('rpr2').hidden=false;
+        document.getElementById('qty2').hidden=true;
+        document.getElementById('repair1').required=true;
+        document.getElementById('qty1').required=false;
+        document.getElementById('defects1').required=false;
+      }
+      else if(document.getElementById('rdft1').checked)
+      {
+        console.log("in if3");
+          document.getElementById('qty2').hidden=true;
+          document.getElementById('dft2').hidden=false;
+          document.getElementById('rpr2').hidden=true;
+          document.getElementById('defects1').required=true;
+          document.getElementById('qty1').required=false;
+          document.getElementById('repair1').required=false;
+
+          
+      }
+  }
 
   function AddNewRecord(){
     

@@ -1,5 +1,8 @@
 const db=require('../dbconnection');
 const sacSchema=db.Schema({
+
+
+    //set the sac schema and equipment_id as a foriegn key
     equipment_id : {type:db.Schema.ObjectId,ref:"inventorytb"},
         student_id : {type:String},
         issue_date : {type:String},

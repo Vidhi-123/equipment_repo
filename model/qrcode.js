@@ -9,7 +9,7 @@ var qr={
     generateQR(id,id1,callback)
     {
         
-        
+        /*this function will send qr code at the time of registration as well as when student will regenerate qr */
         let mykey = crypto.createCipher('aes-128-cbc', 'dascanner');
         let encryptedID = mykey.update(id1, 'utf8', 'hex')
         encryptedID += mykey.final('hex');

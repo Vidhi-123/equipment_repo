@@ -1,6 +1,9 @@
 var nodemailer=require('nodemailer');
 var inventory=require('./sportsinventory_model');
 var demo={
+
+
+    /*this function sends mail when student has borrowed equipment from sac*/
     sendMail:function(demo,callback){
         var x=Date.now();
         var dat_obj=new Date(x);

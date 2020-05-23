@@ -2,7 +2,7 @@
   const db=require('../dbconnection');
   const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-
+//set up user schema
 let userSchema = new mongoose.Schema(
 {
 	_id:

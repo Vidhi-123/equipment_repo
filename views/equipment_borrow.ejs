@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <script type="text/javascript"  src="/javascripts/homepageSAC.js"></script>
+        <script type="text/javascript" src="/javascripts/homepageSAC.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
@@ -27,31 +27,27 @@ function CheckQR(id,status)
          },
          success:function(data)
           {
-      
-         
-             //sachu pdetoh ahiya aavo
-             
-             let s1=Number(data[0]._id);
-             let batch_year=Math.trunc(s1/100000);
-               let batch_id=Math.trunc(s1/1000)%100;
-               let stu_id=Math.trunc(s1%1000);
-               alert(batch_year);
-               alert(batch_id);
-               alert(stu_id);
+              let s1=Number(data[0]._id);
+              let batch_year=Math.trunc(s1/100000);
+              let batch_id=Math.trunc(s1/1000)%100;
+              let stu_id=Math.trunc(s1%1000);
+              alert(batch_year);
+              alert(batch_id);
+              alert(stu_id);
               
               var x=Date.now();
               var dat_obj=new Date(x);
               var year=dat_obj.getFullYear();
               alert("final"+year);
-             if(batch_id==01)
-             {
+              if(batch_id==01)
+              {
                if(batch_year<=year && batch_year>=year-4)
                {
                 document.getElementById('studentId').value = data[0]._id;
-                //window.location.href="/equipment/"+equipmentid+"/"+decryptedID+"/"+qty;
+                
                 document.getElementById('hid-div').hidden=false;
-             document.getElementById('scan-div').hidden=true;
-             document.getElementById('sid').value=data[0]._id;
+                document.getElementById('scan-div').hidden=true;
+                document.getElementById('sid').value=data[0]._id;
            
                   
                   
@@ -59,7 +55,7 @@ function CheckQR(id,status)
                   
                }
                else{
-                 //document.write("invalid");
+            
                  document.getElementById('sid2').innerHTML="*ID is Invalid";
                }
              }
@@ -68,20 +64,20 @@ function CheckQR(id,status)
                 if(batch_year<=year && batch_year>=year-2)
                 {
                   document.getElementById('studentId').value = data[0]._id;
-                  //window.location.href="/equipment/"+equipmentid+"/"+decryptedID+"/"+qty;
+                
                   document.getElementById('hid-div').hidden=false;
-             document.getElementById('scan-div').hidden=true;
-             document.getElementById('sid').value=data[0]._id;
+                  document.getElementById('scan-div').hidden=true;
+                  document.getElementById('sid').value=data[0]._id;
            
                 }
                 else
                 {
-                  //document.write("invalid");
+               
                   document.getElementById('sid2').innerHTML="*ID is Invalid";
                 }
              }
              else{
-               //document.write("invalid");
+               
                document.getElementById('sid2').innerHTML="*ID is Invalid";
              } 
 
@@ -92,8 +88,7 @@ function CheckQR(id,status)
               document.getElementById('sid2').innerHTML=err;
             }   
           
-             //document.getElementsByName('studentID').disabled=true;
-
+             
          
        });
      }
@@ -162,7 +157,7 @@ function CheckQR(id,status)
             const sourceSelectPanel = document.getElementById('sourceSelectPanel')
             sourceSelectPanel.style.display = 'block'
           }
-          // touchstart handler 
+         
           document.getElementById('startButton').addEventListener("touchStart", onlyTouch, false);  
     
           function onlyTouch(ev)
@@ -178,13 +173,12 @@ function CheckQR(id,status)
             ev.preventDefault(); 
           }
     
-          // click event handler 
+        
           document.getElementById('startButton').addEventListener("click", onlyClick, false);  
     
           function onlyClick(ev)
           {
-            //alert("hii"); 
-            //document.getElementById('result').textContent = 'clicked';
+           
             const decodingStyle = document.getElementById('decoding-style').value;
             if (decodingStyle == "once") {
               decodeOnce(codeReader, selectedDeviceId);
@@ -369,12 +363,7 @@ function CheckQR(id,status)
                </tr>
 
               </table>
-        
-              
-        
-            
-
-        </div>
+          </div>
         <div id="hid-div" hidden>
         <table align="center">
         <tr>

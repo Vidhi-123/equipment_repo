@@ -1,100 +1,3 @@
-<!-- <html>
-    <head><title> Inventory Detail </title>
-    
-        <style>
-        table{
-            text-align: center;
-            padding: 5px;
-        }
-        td{
-            padding: 10px;
-        }
-        </style>
-    </head>
-    
-    <body>
-        <h1>Inventory Details</h1>
-        <table border="2px">
-            <th>Name</th>
-            <th>Number Of Available</th>
-            <th>Number Of Issued</th>
-            <% data.stock.forEach(result=>{ %>
-            <tr>
-                    <td> <%= result.name %> </td> 
-                    <td> <%= result.NumberOfAvailable %> </td> 
-                    <td> <%= result.NumberOfItems - result.NumberOfAvailable %> </td> 
-            </tr>
-            <% }) %>
-        </table>
-    </body>
-</html> -->
-
-<!-- <html>
-
-
-<head>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/inventory.css"></link>
-    
-</head>
-<body>
-<div>
-<nav>
-	<div>
-<header><img src="/images/DAIICT.jpg" class="img2"/></header>
-</div>
- <div class="menu">
-                    <div class="menualign"><a href="homepageSAC.html" >Home</a>
-                    <a href="inventory.html" class="selected">Inventory</a>
-                    <a href="profile/">Profile</a>
-                    <a href="Reports/">Reports</a>
-                   	<a href="ChangePassword.html">Change Password</a>
-                    <a href="contact">Logout</a>
-                    </div>
-                </div>
-  </nav>          
-<div class="d2">
-<form align="center" method="POST" action="#">
-	<br/>
-	<h2 class="h12">Inventory</h2>
-	<table align="center">
-	<tr>
-<td><label class="toe">Type of equipment: </label></td>
-<td><select class="sel1" required id="toe">
-	<option value="">Select equipment</option>
-	<option value="shuttlecock">Shuttlecock</option>
-	<option value="Football">Football</option>
-	<option value="Volleyball">Volleyball</option>
-	<option value="Basketball">Basketball</option>
-	<option value="Cricketball">Cricket-Ball</option>
-</select></td>
-</tr>
-<tr></tr>
-<tr>
-	<td><label class="qty2">Quantity: </label></td>
-    <td><input type="number" class="qty3"  onfocusout="validateForm()" onfocus="validatefun()" required>
-        <script type="text/javascript" src="/javascripts/inventory.js"></script>
-    </td>
-		<td><span id="error-qty" style="color: red" ></span></td>
-	
-</tr>
-<tr></tr>
-<tr></tr>
-<tr align="center">
-	<td>
-	<button type="Submit" class="btn1" >Submit</button>
-	</td>
-	<td>
-		<button type="reset" class="btn2">Clear</button>
-	</td>
-</tr>
-</table>
-<br/>
-<br/>
-</form>
-</div>
-</body>
-</html> -->
-
 <html>
 
         <head>
@@ -119,6 +22,7 @@
                             <th>Equipment Name</th>
                             <th>Quantity</th>
                             <th>No of Available</th>
+                            <th>No of Defects</th>
                         </thead>
                         <tbody>
                             <% data.stock.forEach(result=>{ %>
@@ -126,6 +30,7 @@
                                 <td><%= result.name %></td>
                                 <td><%= result.NumberOfItems %></td>
                                 <td><%= result.NumberOfAvailable %></td>
+                                <td><%= result.NumberOfDefects %></td>
                             </tr>
                             <% }) %>
                         </tbody>
@@ -165,7 +70,7 @@
                         </tr>
                         <tr></tr>
                     <tr align="center">
-                    <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
+                    <td><button type="submit" class="btn3">Submit</button></td>
                     <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
                 </tr>
                 </table>
@@ -178,6 +83,11 @@
                             <br/>
                             <h2 class="h11" style="color: #0060b4;">Update Sports Equipment Stock</h2>
                             <table align="center">
+                               <tr>
+                                   <td><input type="radio" name="ch_radio" id="rqty1" value="Qty" checked>Quantity </td>
+                                   <td><input type="radio" name="ch_radio" id="rdft1" value="Dft">Defects </td>
+                                   <td><input type="radio" name="ch_radio" id="rrpr1" value="Rpr">Repairs</td>
+                               </tr> 
                             <tr>
                                 <td><label class="sel1" style="color: #0060b4;">Type of equipment: </label></td>
                                 <td>
@@ -189,17 +99,40 @@
                                                 </select>
                                 </td>
                             </tr>
+                            
                             <tr></tr>
                             <tr>
+                                <tbody id="qty2">
                                     <td><label class="qty" style="color: #0060b4;">Quantity: </label>
                                         <br>
                                         <span style="color: red; font-size: 15px;" >(quantity will be added in current quantity)</span>
                                     </td>
-                                    <td><input type="number" class="qty1" id="qty1" required name="quantity"></td>
+                                    <td><input type="number" class="qty1" id="qty1" name="quantity"></td>
+                                </tbody>   
                                 </tr>
                             <tr></tr>
+
+                            <tr>
+                                <tbody  id="dft2" >
+                                <td><label class="qty" style="color: #0060b4;">Defects: </label>
+                                    <br>
+                                    <span style="color: red; font-size: 15px;" >(Defects will be added in current quantity)</span>
+                                </td>
+                                <td><input type="number" class="qty1" id="defects1" name="Defects"></td>
+                                </tbody>
+                            </tr>
+                        <tr></tr>
+                        <tr>
+                            <tbody  id="rpr2" >
+                            <td><label class="qty" style="color: #0060b4;">Repair: </label>
+                                <br>
+                                <span style="color: red; font-size: 15px;" >(Repair will be added in current quantity)</span>
+                            </td>
+                            <td><input type="number" class="rpr1" id="repair1" name="Repair"></td>
+                            </tbody>
+                        </tr>
                             <tr align="center">
-                            <td><button type="submit" class="btn3" click="submitfun()">Submit</button></td>
+                            <td><button type="submit" class="btn3" id="submitBtn" onclick="submitFn()">Submit</button></td>
                             <td><button type="reset" class="btn4" click="clearfun()">Clear</button></td>
                         </tr>
                         </table>
@@ -214,6 +147,9 @@
         </div>
           
             <%- include('footer') %> 
+
+
+    
 
         </body>
         </html>

@@ -73,7 +73,7 @@ var loggedin = function (req,res,next)
 
 
 //This router will fetch the records and send to inventory 
-//details page for updating qty of equipment 
+//details page for updating qty of equipment and for displaying inventory table 
 router.get("/inventory",loggedin,function(req,res,next){
     inventory.find(function(err,inventoryrecord){
         if(err){
@@ -91,7 +91,8 @@ router.post("/inventory",loggedin,function(req,res,next){
     const data=new inventory({
         name:req.body.itemName,
         NumberOfItems:req.body.totalQuantity,
-        NumberOfAvailable:req.body.availableQuantity
+        NumberOfAvailable:req.body.availableQuantity,
+        NumberOfDefects:0
     });
    data.save(function(err,result)
    {
@@ -109,34 +110,46 @@ router.post("/inventory",loggedin,function(req,res,next){
 router.post("/inventory/updatestock",loggedin,function(req,res,next){
     //console.log(req);
     //update stock
-
+    console.log(req.body.ch_radio);
+    if(req.body.ch_radio=="Qty")
+    {
+    
     inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfAvailable:req.body.quantity,NumberOfItems:req.body.quantity}},function(err,result){
         if(err)
             return res.send(err);
         else{
             res.redirect('/equipment/inventory');
-            //redirect to the page with updated data.
-        // inventorytb.find(function(err,inventoryrecord){
-        //     if(err){
-        //         return res.send(err);
-        //     }
-        //     console.log(inventoryrecord);
-        //     res.render('inventory_detail',{data:{stock:inventoryrecord}});
-        // });
+        
     }
     });
+    }
+    else if(req.body.ch_radio=="Rpr")
+    {
+        inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfAvailable:req.body.Repair,NumberOfDefects:-req.body.Repair}},function(err,result){
+            if(err)
+                return res.send(err);
+            else{
+                res.redirect('/equipment/inventory');
+            
+        }
+        });
+    }
+    else
+    {
+        inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfDefects:req.body.Defects,NumberOfAvailable:-req.body.Defects}},function(err,result){
+            if(err)
+                return res.send(err);
+            else{
+                res.redirect('/equipment/inventory');
+            
+        }
+        });
+    }
 });
 
 
-//
-// router.put('/inventory/:id',loggedin,function(req,res,next){
-//     inventory.updateOne({_id:req.params.id},req.body,function(err,record){
-//         if(err)
-//             return res.send(err);
-//         return res.json(record);
-//     });
-// });
 
+//delete the rec
 router.delete('/inventory/:id',loggedin ,function(req,res,next){
     inventory.deleteOne({_id:req.params.id},function(err,record){
         if(err)
