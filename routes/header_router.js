@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+//this function avoids user ttto generate qr more than  5 times
 var user=require('../model/user_records');
 
 router.get('/',function(req,res,next){

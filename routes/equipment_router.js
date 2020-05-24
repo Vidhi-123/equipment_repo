@@ -91,7 +91,7 @@ router.post("/inventory",loggedin,function(req,res,next){
     const data=new inventory({
         name:req.body.itemName,
         NumberOfItems:req.body.totalQuantity,
-        NumberOfAvailable:req.body.availableQuantity,
+        NumberOfAvailable:req.body.totalQuantity,
         NumberOfDefects:0
     });
    data.save(function(err,result)
@@ -113,7 +113,7 @@ router.post("/inventory/updatestock",loggedin,function(req,res,next){
     console.log(req.body.ch_radio);
     if(req.body.ch_radio=="Qty")
     {
-    
+    //this function will add qty to number of available as well as in no of items
     inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfAvailable:req.body.quantity,NumberOfItems:req.body.quantity}},function(err,result){
         if(err)
             return res.send(err);
@@ -125,6 +125,7 @@ router.post("/inventory/updatestock",loggedin,function(req,res,next){
     }
     else if(req.body.ch_radio=="Rpr")
     {
+        //This function will  add qty to no of available and will deduct the same amount from defects coloumn 
         inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfAvailable:req.body.Repair,NumberOfDefects:-req.body.Repair}},function(err,result){
             if(err)
                 return res.send(err);
@@ -136,6 +137,7 @@ router.post("/inventory/updatestock",loggedin,function(req,res,next){
     }
     else
     {
+        //This function will  deduct qty from no of available and will add the same amount to defects coloumn
         inventory.updateOne({_id:req.body.equipmentID},{$inc:{NumberOfDefects:req.body.Defects,NumberOfAvailable:-req.body.Defects}},function(err,result){
             if(err)
                 return res.send(err);
@@ -149,19 +151,13 @@ router.post("/inventory/updatestock",loggedin,function(req,res,next){
 
 
 
-//delete the rec
-router.delete('/inventory/:id',loggedin ,function(req,res,next){
-    inventory.deleteOne({_id:req.params.id},function(err,record){
-        if(err)
-            return res.send(err);
-        return res.json(record);
-    });
-});
 
 
 
 
 
+
+//this router will be used for fetching paricular student's equipment borrower history
 router.get('/borrow_history',loggedin1,function(req,res,next){
     let stu_id=req.user._id.toString();
     console.log(req.user._id);
@@ -219,7 +215,14 @@ router.get('/borrow_history',loggedin1,function(req,res,next){
 })
 
 
+//this router performs following functionality
+/*
+1)When user comes for issuing any equipment then if the requesting equipment is there than it will be given to that student and also mail is sent saying when to return for penalty purposes.
+2)When same user come 2 time then he/she must have to return that earlier borrowed equipment if he wants tthe same equipment which is not returned by him then it will not be given to him/her 
+3)else if he wants to return then loan is calculatted and that entry is been done in records for later purposes.
 
+
+*/
 router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, next) {
     console.log("heyyyyyy");
     if(req.params.equipmentID && req.params.studentID && req.params.quantity)
@@ -376,161 +379,164 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, 
 
 
 
-router.post('/',loggedin, function (req, res, next) {
-    console.log("heyyyy");
-    equipment.find({ student_id: req.body.studentID, equipment_id: req.body.equipmentID }, function (err, rows) {
-        if (err) {
-            res.json(err);
-        }
-        else {
-            if (rows.length == 0) {
-                var x = new Date();
+// router.post('/',loggedin, function (req, res, next) {
+//     console.log("heyyyy");
+//     equipment.find({ student_id: req.body.studentID, equipment_id: req.body.equipmentID }, function (err, rows) {
+//         if (err) {
+//             res.json(err);
+//         }
+//         else {
+//             if (rows.length == 0) {
+//                 var x = new Date();
                 
-                const equi = new equipment({
-                    equipment_id: req.body.equipmentID,
-                    student_id: req.body.studentID,
-                    issue_date: date.format(x, 'DD-MM-YYYY'),
-                    quantity: req.body.quantity
+//                 const equi = new equipment({
+//                     equipment_id: req.body.equipmentID,
+//                     student_id: req.body.studentID,
+//                     issue_date: date.format(x, 'DD-MM-YYYY'),
+//                     quantity: req.body.quantity
 
 
-                });
+//                 });
                
-                equi.save(function (err, result) {
-                    if (err) 
-                    {
-                        res.json(err);
-                    }
-                    else {
-                        //res.json(result);
-                        /*var data={
-                            "id":req.body.studentID,
-                            "equipment":req.body.equipmentID,
-                            "Quantity":req.body.quantity,
-                            "return_date":new Date(dat_obj.getFullYear(),dat_obj.getMonth(),dat_obj.getDate()+7)
-                        };*/
-                       mail_equ.sendMail(equi);
+//                 equi.save(function (err, result) {
+//                     if (err) 
+//                     {
+//                         res.json(err);
+//                     }
+//                     else {
+//                         //res.json(result);
+//                         /*var data={
+//                             "id":req.body.studentID,
+//                             "equipment":req.body.equipmentID,
+//                             "Quantity":req.body.quantity,
+//                             "return_date":new Date(dat_obj.getFullYear(),dat_obj.getMonth(),dat_obj.getDate()+7)
+//                         };*/
+//                        mail_equ.sendMail(equi);
                        
-                            inventory.updateOne({_id:result.equipment_id},{$inc:{NumberOfAvailable:-result.quantity}},function(err,result){
-                                if(err)
-                                    res.json(err);
-                                    res.redirect('/equipment');
-                            });
-                    }
-                });
-            }
-            else {
+//                             inventory.updateOne({_id:result.equipment_id},{$inc:{NumberOfAvailable:-result.quantity}},function(err,result){
+//                                 if(err)
+//                                     res.json(err);
+//                                     res.redirect('/equipment');
+//                             });
+//                     }
+//                 });
+//             }
+//             else {
            
-                let tot_qty=rows[0].quantity;
-                var x = Date.now();
-                var dat_obj = new Date(x);
-                var now=new Date();
-                //quantity aema hase j so eno use karine loan nu karje
-                //console.log(dat_obj-rows[0].issue_date);
+//                 let tot_qty=rows[0].quantity;
+//                 var x = Date.now();
+//                 var dat_obj = new Date(x);
+//                 var now=new Date();
+//                 //quantity aema hase j so eno use karine loan nu karje
+//                 //console.log(dat_obj-rows[0].issue_date);
 
-                var dat_obj1 = new Date(rows[0].issue_date);
-                const diffTime = Math.abs(dat_obj - dat_obj1);
-                var loan1 = 0;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                if (diffDays > 7) {
-                    loan1 = (diffDays - 7) * 5 *req.body.quantity;
-                }
-                const sac1 = new sacrecords({
-                    equipment_id: rows[0].equipment_id,
-                    student_id: rows[0].student_id,
-                    issue_date: rows[0].issue_date,
-                    quantity:req.body.quantity,
-                    return_date: date.format(now, 'DD-MM-YYYY'),
-                    loan: loan1
+//                 var dat_obj1 = new Date(rows[0].issue_date);
+//                 const diffTime = Math.abs(dat_obj - dat_obj1);
+//                 var loan1 = 0;
+//                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//                 if (diffDays > 7) {
+//                     loan1 = (diffDays - 7) * 5 *req.body.quantity;
+//                 }
+//                 const sac1 = new sacrecords({
+//                     equipment_id: rows[0].equipment_id,
+//                     student_id: rows[0].student_id,
+//                     issue_date: rows[0].issue_date,
+//                     quantity:req.body.quantity,
+//                     return_date: date.format(now, 'DD-MM-YYYY'),
+//                     loan: loan1
 
 
 
-                });
-               // console.log(sac1);
-                sac1.save(function (err, result) {
-                    if (err) {
-                        res.json(err);
-                    }
-                    else {
-                        //res.json(result);
+//                 });
+//                // console.log(sac1);
+//                 sac1.save(function (err, result) {
+//                     if (err) {
+//                         res.json(err);
+//                     }
+//                     else {
+//                         //res.json(result);
                      
-                        inventory.updateOne({_id:result.equipment_id},{$inc:{NumberOfAvailable:req.body.quantity}},function(err,result){
-                            if(err)
-                                res.json(err);
-                                else{
-                                    if(tot_qty-req.body.quantity<=0)
-                                    {
-                            equipment.deleteOne({ student_id: req.body.studentID, equipment_id: req.body.equipmentID }, function (err, result) {
-                                    if (err) {
-                                        res.json(err);
-                                    }
-                                    else {
-                                        res.redirect('/equipment');
+//                         inventory.updateOne({_id:result.equipment_id},{$inc:{NumberOfAvailable:req.body.quantity}},function(err,result){
+//                             if(err)
+//                                 res.json(err);
+//                                 else{
+//                                     if(tot_qty-req.body.quantity<=0)
+//                                     {
+//                             equipment.deleteOne({ student_id: req.body.studentID, equipment_id: req.body.equipmentID }, function (err, result) {
+//                                     if (err) {
+//                                         res.json(err);
+//                                     }
+//                                     else {
+//                                         res.redirect('/equipment');
                                         
-                                    }
-                                });
-                            }
-                            else{
-                                equipment.updateOne({ student_id: req.body.studentID, equipment_id: req.body.equipmentID },{$inc:{quantity:-req.body.quantity}},function(err,rows){
-                                    if(err)
-                                    {
-                                        res.json(err);
-                                    }
-                                    else
-                                    {
-                                        res.redirect('/equipment');
-                                    }
-                                })
-                            }
-                            }
-                        });
+//                                     }
+//                                 });
+//                             }
+//                             else{
+//                                 equipment.updateOne({ student_id: req.body.studentID, equipment_id: req.body.equipmentID },{$inc:{quantity:-req.body.quantity}},function(err,rows){
+//                                     if(err)
+//                                     {
+//                                         res.json(err);
+//                                     }
+//                                     else
+//                                     {
+//                                         res.redirect('/equipment');
+//                                     }
+//                                 })
+//                             }
+//                             }
+//                         });
                     
                        
                         
-                    }
-                });
-            }
-        }
-    })
-})
+//                     }
+//                 });
+//             }
+//         }
+//     })
+// })
 
-router.put('/:id', function (req, res, next) {
-    equipment.findById(req.params.id, function (err, docs) {
-        console.log(docs);
-        if (err) {
-            res.json(err);
-        }
-        else {
-            //res.json(docs);
-            docs.equipment_id = req.body.equipment_id;
-            docs.student_id = req.body.student_id;
-            docs.issue_date = req.body.issue_date;
-            docs.return_date = req.body.return_date;
-            docs.loan = req.body.loan;
+// router.put('/:id', function (req, res, next) {
+//     equipment.findById(req.params.id, function (err, docs) {
+//         console.log(docs);
+//         if (err) {
+//             res.json(err);
+//         }
+//         else {
+//             //res.json(docs);
+//             docs.equipment_id = req.body.equipment_id;
+//             docs.student_id = req.body.student_id;
+//             docs.issue_date = req.body.issue_date;
+//             docs.return_date = req.body.return_date;
+//             docs.loan = req.body.loan;
 
-            docs.save(function (err1, res1) {
-                if (err1) {
-                    res.json(err1);
-                }
-                else {
-                    res.json(res1);
-                }
-            });
+//             docs.save(function (err1, res1) {
+//                 if (err1) {
+//                     res.json(err1);
+//                 }
+//                 else {
+//                     res.json(res1);
+//                 }
+//             });
 
-        }
-    });
-});
+//         }
+//     });
+// });
 
 
 
-router.delete('/:id', function (req, res, next) {
-    equipment.deleteOne({ _id: req.params.id }, function (err, result) {
-        if (err) {
-            res.json(err);
-        }
-        else {
-            res.json(result);
-        }
-    })
-});
+// router.delete('/:id', function (req, res, next) {
+//     equipment.deleteOne({ _id: req.params.id }, function (err, result) {
+//         if (err) {
+//             res.json(err);
+//         }
+//         else {
+//             res.json(result);
+//         }
+//     })
+// });
 
-module.exports = router;
+ module.exports = router;
+
+
+
