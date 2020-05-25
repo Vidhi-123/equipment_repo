@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 var equipment=require('./routes/equipment_router');
 
 var scanqr=require('./routes/scanqr_router');
-var qrcode=require('./routes/qrcode_router');
+// var qrcode=require('./routes/qrcode_router');
 var lib_tmp=require('./routes/lib_tmp_router');
 
 
@@ -52,9 +52,9 @@ const homeRoute = require("./routes/homepage_router")(passport);
 
 
 
-app.get("/generateqr",function(req,res,next){
-  res.render('qr_code');
-})
+// app.get("/generateqr",function(req,res,next){
+//   res.render('qr_code');
+// })
 
 // app.get("/student_home",function(req,res,next){
 //   res.render('/student_homepage');
@@ -107,7 +107,7 @@ app.use("/home",homeRoute);
 
 
 app.use('/lib_tmp',lib_tmp);
-app.use('/qrcode',qrcode);
+// app.use('/qrcode',qrcode);
 
 
 // catch 404 and forward to error handler

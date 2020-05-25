@@ -80,7 +80,7 @@ router.get("/inventory",loggedin,function(req,res,next){
             return res.send(err);
         }
        
-        res.render('inventory_detail',{data:{stock:inventoryrecord}});
+        res.render('equipment_views/inventory_detail',{data:{stock:inventoryrecord}});
     });
 });
 
@@ -202,7 +202,7 @@ router.get('/borrow_history',loggedin1,function(req,res,next){
 
                     console.log(rows2);
                      //res.json(rows2);
-                     res.render('student_borrower_history',{
+                     res.render('student_views/student_borrower_history',{
                         sac_records:rows1,
                         pending_records:rows2
                     })
@@ -352,7 +352,7 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, 
             res.send(err);
         }
         else {
-            res.render('equipment_borrow', { data: { stock: inventoryrecord }});
+            res.render('equipment_views/equipment_borrow', { data: { stock: inventoryrecord }});
             //res.json(inventoryrecord);
         }
     });

@@ -289,7 +289,7 @@ else{
             let x=200-rows.length;
            
             //res.json(x);
-            res.render('add_lib_tmp',{
+            res.render('library_views/add_lib_tmp',{
                 avl_seats:x,
                 students:rows,
                 errors:null

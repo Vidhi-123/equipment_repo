@@ -55,7 +55,7 @@ router.get('/',loggedin,function(req,res,next){
                     let x=200-rows1.length;
                 
                     //res.json(x);
-                    res.render('student_homepage',{
+                    res.render('student_views/student_homepage',{
                         abl_seats:x,
                         inventories:rows,
                         student_id:req.user._id
