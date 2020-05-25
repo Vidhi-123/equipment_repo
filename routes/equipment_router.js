@@ -225,6 +225,7 @@ router.get('/borrow_history',loggedin1,function(req,res,next){
 */
 router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, next) {
     console.log("heyyyyyy");
+    let l_amount;
     if(req.params.equipmentID && req.params.studentID && req.params.quantity)
     {
         //console.log(req.params.equipmentID);
@@ -276,16 +277,37 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, 
                     var x = Date.now();
                     var dat_obj=new Date(x);
                     var now=new Date();
+                    var dat_obj2=date.format(now, 'DD-MM-YYYY');
 
                     //quantity aema hase j so eno use karine loan nu karje
                     //console.log(dat_obj-rows[0].issue_date);
     
-                    var dat_obj1 = new Date(rows[0].issue_date);
-                    const diffTime = Math.abs(dat_obj - dat_obj1);
+                    var dat_obj1 = rows[0].issue_date;
+                    var d1=Number(dat_obj1.substr(0,2));
+                    var d2=Number(dat_obj2.substr(0,2));
+                    var m1=Number(dat_obj1.substr(3,2));
+                    var m2=Number(dat_obj2.substr(3,2));
+                    var y1=Number(dat_obj1.substr(6,4));
+                    var y2=Number(dat_obj2.substr(6,4));
+                    console.log(d1+"/"+m1+"/"+y1);
+                    console.log(d2+"/"+m2+"/"+y2);
+
+                    var date_var=new Date(y1,m1,d1);
+                    var date_var1=new Date(y2,m2,d2);
+                    console.log(date_var);
+                    console.log(date_var1);
+                
+                    const diffTime = Math.abs(date_var1 - date_var);
                     var loan1 = 0;
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    console.log("diff Days : "+diffDays);
+                    
+
+
                     if (diffDays > 7) {
                         loan1 = (diffDays - 7) * 5 *req.params.quantity;
+                        l_amount=loan1;
+
                     }
                     const sac1 = new sacrecords({
                         equipment_id: rows[0].equipment_id,
@@ -317,7 +339,11 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, 
                                             res.json(err);
                                         }
                                         else {
-                                            res.redirect('/equipment');
+                                            
+                                                console.log("loan amount : "+l_amount.toString());
+                                            res.send(l_amount.toString());
+                                            
+                                            
                                             
                                         }
                                     });
@@ -330,7 +356,10 @@ router.get("/:equipmentID?/:studentID?/:quantity?",loggedin,function (req, res, 
                                         }
                                         else
                                         {
-                                            res.redirect('/equipment');
+                                            
+                                                console.log("loan amount : "+l_amount.toString());
+                                                 res.send(l_amount.toString());
+                                            
                                         }
                                     })
                                 }

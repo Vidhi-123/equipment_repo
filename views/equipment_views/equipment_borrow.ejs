@@ -225,7 +225,21 @@ function CheckQR(id,status)
               if(confirm("Are you sure you want to return?"))
               {
                 console.log("yes");
-                window.location.href="/equipment/"+equipmentid+"/"+studentid+"/"+qty;
+                // window.location.href="/equipment/"+equipmentid+"/"+studentid+"/"+qty;
+                $.ajax({
+                  type: 'get',
+                  url: '/equipment/'+equipmentid+"/"+studentid+"/"+qty,
+                  
+                  success: function(data){
+                    console.log(data);
+                    let loan_amount = data;
+
+                    alert("Loan Amount  : "+loan_amount);
+                    window.location.href="/equipment";
+                    
+                  }
+                })
+               
               }
               else{
                 console.log("no");
